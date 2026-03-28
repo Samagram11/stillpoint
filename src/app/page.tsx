@@ -6,7 +6,9 @@ import UploadZone from "@/components/UploadZone";
 import ProcessingView from "@/components/ProcessingView";
 import MeditationCard from "@/components/MeditationCard";
 import MeditationReader from "@/components/MeditationReader";
+import VoiceSelector from "@/components/VoiceSelector";
 import type { ApiKeyConfig, ProcessingState, Meditation, MeditationType } from "@/lib/types";
+// voices.ts kept for reference; VoiceSelector now fetches live from ElevenLabs API
 import { parseExport } from "@/lib/parseExport";
 import { formatExcerptsForExtraction } from "@/lib/extractCapacities";
 import {
@@ -27,6 +29,8 @@ export default function Home() {
   const [selectedMeditation, setSelectedMeditation] =
     useState<Meditation | null>(null);
   const [serverHasKeys, setServerHasKeys] = useState(false);
+  const [selectedVoiceId, setSelectedVoiceId] = useState("");
+  const [hasElevenLabsKey, setHasElevenLabsKey] = useState(false);
 
   // Restore state from localStorage on mount + check server config
   useEffect(() => {
@@ -38,6 +42,7 @@ export default function Home() {
           const config = await configRes.json();
           if (config.hasAnthropicKey) {
             setServerHasKeys(true);
+            if (config.hasElevenLabsKey) setHasElevenLabsKey(true);
             // Server has keys — skip BYOK, use a placeholder config
             setApiKeys({ anthropicKey: "server-provided" });
 
@@ -69,6 +74,7 @@ export default function Home() {
           const config = JSON.parse(storedKeys) as ApiKeyConfig;
           if (config.anthropicKey) {
             setApiKeys(config);
+            if (config.elevenLabsKey) setHasElevenLabsKey(true);
 
             const storedMeditations = localStorage.getItem(
               "stillpoint-meditations"
@@ -330,6 +336,13 @@ export default function Home() {
 
         {step === "gallery" && (
           <div className="fade-in space-y-4">
+            {hasElevenLabsKey && (
+              <VoiceSelector
+                selectedVoiceId={selectedVoiceId}
+                onSelect={setSelectedVoiceId}
+                elevenLabsKey={apiKeys?.elevenLabsKey}
+              />
+            )}
             {meditations.map((m) => (
               <MeditationCard
                 key={m.id}
@@ -357,7 +370,24 @@ export default function Home() {
         {step === "reader" && selectedMeditation && (
           <MeditationReader
             meditation={selectedMeditation}
+            voiceId={selectedVoiceId}
+            elevenLabsKey={
+              hasElevenLabsKey
+                ? apiKeys?.elevenLabsKey
+                : undefined
+            }
             onBack={() => setStep("gallery")}
+            onMeditationUpdate={(updated) => {
+              const newList = meditations.map((m) =>
+                m.id === updated.id ? updated : m
+              );
+              setMeditations(newList);
+              setSelectedMeditation(updated);
+              localStorage.setItem(
+                "stillpoint-meditations",
+                JSON.stringify(newList)
+              );
+            }}
           />
         )}
       </div>

@@ -226,11 +226,11 @@ ELEVENLABS_API_KEY=              # Optional — text-only mode works without thi
 - [x] localStorage caching
 
 ### Phase 4: Audio
-- [ ] VoiceSelector (6 voices + custom)
-- [ ] /api/generate-audio route
-- [ ] AudioPlayer component
-- [ ] SSML conversion
-- [ ] Text-audio sync
+- [x] VoiceSelector (6 voices + custom)
+- [x] /api/generate-audio route
+- [x] AudioPlayer component
+- [x] SSML conversion
+- [ ] Text-audio sync (deferred to Phase 5 — needs MeditationPlayer)
 
 ### Phase 5: Player Polish
 - [ ] Full-screen MeditationPlayer
