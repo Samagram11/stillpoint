@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #F5F0EB;
+  --color-charcoal: #2C2C2C;
+  --color-sage: #8B9D83;
+  --color-clay: #C4A882;
+  --color-mist: #D4D0CB;
+  --color-deep: #1A1A1A;
+}
+
+@layer base {
+  :root {
+    --cream: #F5F0EB;
+    --charcoal: #2C2C2C;
+    --sage: #8B9D83;
+    --clay: #C4A882;
+    --mist: #D4D0CB;
+    --deep: #1A1A1A;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .dark body {
+    background-color: var(--deep);
+    color: var(--cream);
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  .breathing-circle {
+    animation: breathe 8s ease-in-out infinite;
+  }
+}
