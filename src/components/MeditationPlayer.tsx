@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { MEDITATION_TYPES } from "@/lib/meditationTypes";
 import BreathGuide from "@/components/BreathGuide";
+import AudioPlayer from "@/components/AudioPlayer";
 import Timer from "@/components/Timer";
 import type { Meditation } from "@/lib/types";
 
@@ -427,10 +428,8 @@ export default function MeditationPlayer({
             )}
           </div>
         ) : (
-          <div className="mx-auto max-w-lg text-center">
-            <p className="text-xs text-charcoal/30 dark:text-cream/30">
-              Read along at your own pace
-            </p>
+          <div className="mx-auto max-w-lg">
+            <AudioPlayer script={meditation.script} />
           </div>
         )}
       </div>
