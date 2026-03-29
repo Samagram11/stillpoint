@@ -306,10 +306,10 @@ export default function Home() {
           <div className="flex justify-end mb-4">
             <ThemeSelector />
           </div>
-          <h1 className="font-display text-5xl font-light tracking-tight text-charcoal">
+          <h1 className="font-display text-5xl font-light tracking-tight text-ink">
             stillpoint
           </h1>
-          <p className="mt-3 text-sm text-charcoal/50">
+          <p className="mt-3 text-sm text-ink/50">
             Your conversations, transformed into meditations.
           </p>
         </div>
@@ -331,14 +331,14 @@ export default function Home() {
               {!serverHasKeys && (
                 <button
                   onClick={() => setStep("keys")}
-                  className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60"
+                  className="text-xs text-ink/30 transition-colors hover:text-ink/60"
                 >
                   Change API keys
                 </button>
               )}
               <button
                 onClick={handleClearData}
-                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 ml-auto"
+                className="text-xs text-ink/30 transition-colors hover:text-red-400 ml-auto"
               >
                 Clear all data
               </button>
@@ -369,13 +369,13 @@ export default function Home() {
             <div className="flex items-center justify-between pt-4">
               <button
                 onClick={() => setStep("upload")}
-                className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60"
+                className="text-xs text-ink/30 transition-colors hover:text-ink/60"
               >
                 Upload new conversations
               </button>
               <button
                 onClick={handleClearData}
-                className="text-xs text-charcoal/30 transition-colors hover:text-red-400"
+                className="text-xs text-ink/30 transition-colors hover:text-red-400"
               >
                 Clear all data
               </button>

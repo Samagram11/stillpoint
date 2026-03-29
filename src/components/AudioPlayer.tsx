@@ -172,7 +172,7 @@ function WebSpeechPlayer({ script }: { script: string }) {
 
   if (!supported) {
     return (
-      <p className="text-center text-xs text-charcoal/30">
+      <p className="text-center text-xs text-ink/30">
         Audio playback not supported in this browser.
       </p>
     );
@@ -180,11 +180,11 @@ function WebSpeechPlayer({ script }: { script: string }) {
 
   return (
     <div className="fade-in space-y-3">
-      <div className="rounded-xl border border-mist bg-white/40 p-4">
+      <div className="rounded-xl border border-edge bg-white/40 p-4">
         <div className="flex items-center gap-4">
           <button
             onClick={togglePlay}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream transition-all hover:bg-deep"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-surface transition-all hover:bg-emphasis"
           >
             {isPlaying ? (
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -199,7 +199,7 @@ function WebSpeechPlayer({ script }: { script: string }) {
           </button>
 
           <div className="flex-1">
-            <p className="text-xs text-charcoal/40">
+            <p className="text-xs text-ink/40">
               {isPlaying ? "Playing with browser voice..." : "Browser text-to-speech"}
             </p>
           </div>
@@ -214,7 +214,7 @@ function WebSpeechPlayer({ script }: { script: string }) {
                   setIsPlaying(false);
                 }
               }}
-              className="rounded-lg border border-mist bg-white/50 px-2 py-1 text-xs text-charcoal/60"
+              className="rounded-lg border border-edge bg-white/50 px-2 py-1 text-xs text-ink/60"
             >
               {voices.map((v, i) => (
                 <option key={v.name} value={i}>
@@ -225,7 +225,7 @@ function WebSpeechPlayer({ script }: { script: string }) {
           )}
         </div>
       </div>
-      <p className="text-center text-xs text-charcoal/25">
+      <p className="text-center text-xs text-ink/25">
         Add an ElevenLabs paid key for higher-quality voices
       </p>
     </div>
@@ -255,12 +255,12 @@ function PlayerShell({
   onCycleSpeed: () => void;
 }) {
   return (
-    <div className="fade-in rounded-xl border border-mist bg-white/40 p-4">
+    <div className="fade-in rounded-xl border border-edge bg-white/40 p-4">
       <div className="flex items-center gap-4">
         <button
           onClick={onTogglePlay}
           disabled={disabled}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream transition-all hover:bg-deep disabled:opacity-30"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-surface transition-all hover:bg-emphasis disabled:opacity-30"
         >
           {isPlaying ? (
             <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -282,12 +282,12 @@ function PlayerShell({
             step={0.1}
             value={currentTime}
             onChange={onSeek}
-            className="h-1 w-full cursor-pointer appearance-none rounded-full bg-mist accent-sage"
+            className="h-1 w-full cursor-pointer appearance-none rounded-full bg-edge accent-accent"
             style={{
-              background: `linear-gradient(to right, var(--sage) ${progress}%, var(--mist) ${progress}%)`,
+              background: `linear-gradient(to right, var(--accent) ${progress}%, var(--edge) ${progress}%)`,
             }}
           />
-          <div className="flex justify-between text-xs text-charcoal/30">
+          <div className="flex justify-between text-xs text-ink/30">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -295,7 +295,7 @@ function PlayerShell({
 
         <button
           onClick={onCycleSpeed}
-          className="shrink-0 rounded-full border border-mist px-2.5 py-1 text-xs text-charcoal/40 transition-colors hover:border-sage hover:text-charcoal/60"
+          className="shrink-0 rounded-full border border-edge px-2.5 py-1 text-xs text-ink/40 transition-colors hover:border-accent hover:text-ink/60"
         >
           {SPEEDS[speedIndex]}x
         </button>

@@ -5,12 +5,12 @@ Iridescent gradients, frosted glass, soft ethereal glow. Inspired by abstract au
 ## Colors
 
 ```css
---color-cream:     #F8F4FF;    /* Background — soft lavender white */
---color-charcoal:  #2D2640;    /* Primary text — deep purple-grey */
---color-sage:      #9B8EC4;    /* Accent — soft purple */
---color-clay:      #D4A0C0;    /* Secondary accent — dusty rose */
---color-mist:      #E8E0F0;    /* Borders — lavender mist */
---color-deep:      #1C1528;    /* Hover states — deep violet */
+--color-surface:   #F8F4FF;    /* Background — soft lavender white */
+--color-ink:       #2D2640;    /* Primary text — deep purple-grey */
+--color-accent:    #9B8EC4;    /* Accent — soft purple */
+--color-warm:      #D4A0C0;    /* Secondary accent — dusty rose */
+--color-edge:      #E8E0F0;    /* Borders — lavender mist */
+--color-emphasis:  #1C1528;    /* Hover states — deep violet */
 ```
 
 ## Background

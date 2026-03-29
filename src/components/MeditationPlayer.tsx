@@ -215,7 +215,7 @@ export default function MeditationPlayer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col bg-cream transition-colors"
+      className="fixed inset-0 z-50 flex flex-col bg-surface transition-colors"
       onMouseMove={handleInteraction}
       onTouchStart={handleInteraction}
     >
@@ -227,7 +227,7 @@ export default function MeditationPlayer({
       >
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-sm text-charcoal/40 transition-colors hover:text-charcoal/70"
+          className="flex items-center gap-2 text-sm text-ink/40 transition-colors hover:text-ink/70"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4">
             <path d="M19 12H5m0 0l7 7m-7-7l7-7" strokeLinecap="round" strokeLinejoin="round" />
@@ -244,8 +244,8 @@ export default function MeditationPlayer({
             }}
             className={`rounded-full px-3 py-1.5 text-xs transition-all ${
               showBreathGuide
-                ? "bg-sage/20 text-sage"
-                : "text-charcoal/30 hover:text-charcoal/50"
+                ? "bg-accent/20 text-accent"
+                : "text-ink/30 hover:text-ink/50"
             }`}
           >
             Breathe
@@ -259,8 +259,8 @@ export default function MeditationPlayer({
             }}
             className={`rounded-full px-3 py-1.5 text-xs transition-all ${
               showTimer
-                ? "bg-sage/20 text-sage"
-                : "text-charcoal/30 hover:text-charcoal/50"
+                ? "bg-accent/20 text-accent"
+                : "text-ink/30 hover:text-ink/50"
             }`}
           >
             Timer
@@ -272,13 +272,13 @@ export default function MeditationPlayer({
       <div className="flex flex-1 flex-col items-center overflow-hidden px-6">
         {/* Header */}
         <div className="mb-6 text-center">
-          <span className="mb-2 inline-block rounded-full bg-sage/10 px-2.5 py-0.5 text-xs text-sage">
+          <span className="mb-2 inline-block rounded-full bg-accent/10 px-2.5 py-0.5 text-xs text-accent">
             {displayInfo.name}
           </span>
-          <h2 className="font-display text-3xl font-light text-charcoal sm:text-4xl">
+          <h2 className="font-display text-3xl font-light text-ink sm:text-4xl">
             {meditation.title}
           </h2>
-          <p className="mt-2 text-sm text-charcoal/40">
+          <p className="mt-2 text-sm text-ink/40">
             {meditation.capacity}
           </p>
         </div>
@@ -316,13 +316,13 @@ export default function MeditationPlayer({
           className="flex-1 overflow-y-auto pb-32 scrollbar-hide"
           style={{ maxWidth: "36rem" }}
         >
-          <div className="font-display text-lg font-light leading-[2] text-charcoal/80 sm:text-xl sm:leading-[2.1]">
+          <div className="font-display text-lg font-light leading-[2] text-ink/80 sm:text-xl sm:leading-[2.1]">
             {segments.map((seg, i) => {
               if (seg.type === "pause") {
                 return (
                   <span
                     key={i}
-                    className="my-6 block text-center text-xs tracking-widest text-sage/50"
+                    className="my-6 block text-center text-xs tracking-widest text-accent/50"
                   >
                     · · · {seg.seconds}s · · ·
                   </span>
@@ -332,7 +332,7 @@ export default function MeditationPlayer({
                 return (
                   <span
                     key={i}
-                    className="my-6 block text-center text-xs tracking-widest text-sage"
+                    className="my-6 block text-center text-xs tracking-widest text-accent"
                   >
                     ○ breathe ○
                   </span>
@@ -342,7 +342,7 @@ export default function MeditationPlayer({
                 return (
                   <span
                     key={i}
-                    className="my-8 block text-center text-sm tracking-widest text-clay"
+                    className="my-8 block text-center text-sm tracking-widest text-warm"
                   >
                     ◊
                   </span>
@@ -364,7 +364,7 @@ export default function MeditationPlayer({
 
       {/* Bottom audio controls */}
       <div
-        className={`border-t border-mist/50 bg-cream/90 px-6 py-4 backdrop-blur-sm transition-all duration-500 ${
+        className={`border-t border-edge/50 bg-surface/90 px-6 py-4 backdrop-blur-sm transition-all duration-500 ${
           showControls || !isPlaying ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
       >
@@ -374,7 +374,7 @@ export default function MeditationPlayer({
             <button
               onClick={togglePlay}
               disabled={!isAudioLoaded}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream transition-all hover:bg-deep disabled:opacity-30"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ink text-surface transition-all hover:bg-emphasis disabled:opacity-30"
             >
               {isPlaying ? (
                 <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -397,14 +397,14 @@ export default function MeditationPlayer({
                 step={0.1}
                 value={currentTime}
                 onChange={handleSeek}
-                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-mist accent-sage"
+                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-edge accent-accent"
                 style={{
-                  background: `linear-gradient(to right, var(--sage) ${progress}%, ${
-                    "var(--mist)"
+                  background: `linear-gradient(to right, var(--accent) ${progress}%, ${
+                    "var(--edge)"
                   } ${progress}%)`,
                 }}
               />
-              <div className="flex justify-between text-xs tabular-nums text-charcoal/30">
+              <div className="flex justify-between text-xs tabular-nums text-ink/30">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
@@ -413,7 +413,7 @@ export default function MeditationPlayer({
             {/* Speed */}
             <button
               onClick={cycleSpeed}
-              className="shrink-0 rounded-full border border-mist px-2.5 py-1 text-xs text-charcoal/40 transition-colors hover:border-sage hover:text-charcoal/60"
+              className="shrink-0 rounded-full border border-edge px-2.5 py-1 text-xs text-ink/40 transition-colors hover:border-accent hover:text-ink/60"
             >
               {SPEEDS[speedIndex]}x
             </button>
@@ -425,7 +425,7 @@ export default function MeditationPlayer({
                 <button
                   onClick={generateAudio}
                   disabled={isGeneratingAudio}
-                  className="w-full rounded-xl border border-mist bg-white/40 px-4 py-3 text-sm text-charcoal/60 transition-all hover:border-sage hover:text-charcoal disabled:opacity-50"
+                  className="w-full rounded-xl border border-edge bg-white/40 px-4 py-3 text-sm text-ink/60 transition-all hover:border-accent hover:text-ink disabled:opacity-50"
                 >
                   {isGeneratingAudio
                     ? "Generating audio..."

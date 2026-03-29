@@ -59,7 +59,7 @@ export default function VoiceSelector({
   }, [loaded, voices.length, selectedVoiceId, onSelect]);
 
   if (!loaded) {
-    return <div className="text-xs text-charcoal/30">Loading voices...</div>;
+    return <div className="text-xs text-ink/30">Loading voices...</div>;
   }
 
   const isCustomSelected =
@@ -67,7 +67,7 @@ export default function VoiceSelector({
 
   return (
     <div className="fade-in space-y-3">
-      <label className="block text-xs font-medium text-charcoal/50">
+      <label className="block text-xs font-medium text-ink/50">
         Voice
       </label>
 
@@ -78,8 +78,8 @@ export default function VoiceSelector({
             onClick={() => onSelect(voice.id)}
             className={`rounded-full border px-3 py-1.5 text-xs transition-all ${
               selectedVoiceId === voice.id
-                ? "border-sage bg-sage/10 text-sage"
-                : "border-mist text-charcoal/40 hover:border-sage/40 hover:text-charcoal/60"
+                ? "border-accent bg-accent/10 text-accent"
+                : "border-edge text-ink/40 hover:border-accent/40 hover:text-ink/60"
             }`}
             title={voice.description}
           >
@@ -89,7 +89,7 @@ export default function VoiceSelector({
 
         {/* If no voices loaded, show a default option */}
         {voices.length === 0 && (
-          <span className="rounded-full border border-sage bg-sage/10 px-3 py-1.5 text-xs text-sage">
+          <span className="rounded-full border border-accent bg-accent/10 px-3 py-1.5 text-xs text-accent">
             Default voice
           </span>
         )}
@@ -98,8 +98,8 @@ export default function VoiceSelector({
           onClick={() => setShowCustom(!showCustom)}
           className={`rounded-full border px-3 py-1.5 text-xs transition-all ${
             isCustomSelected && customId
-              ? "border-sage bg-sage/10 text-sage"
-              : "border-mist text-charcoal/40 hover:border-sage/40 hover:text-charcoal/60"
+              ? "border-accent bg-accent/10 text-accent"
+              : "border-edge text-ink/40 hover:border-accent/40 hover:text-ink/60"
           }`}
         >
           Custom ID
@@ -113,14 +113,14 @@ export default function VoiceSelector({
             value={customId}
             onChange={(e) => setCustomId(e.target.value)}
             placeholder="ElevenLabs Voice ID"
-            className="flex-1 rounded-lg border border-mist bg-white/50 px-3 py-2 text-xs transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none"
+            className="flex-1 rounded-lg border border-edge bg-white/50 px-3 py-2 text-xs transition-colors placeholder:text-ink/30 focus:border-accent focus:outline-none"
           />
           <button
             onClick={() => {
               if (customId.trim()) onSelect(customId.trim());
             }}
             disabled={!customId.trim()}
-            className="rounded-lg bg-charcoal px-3 py-2 text-xs text-cream transition-all hover:bg-deep disabled:opacity-30"
+            className="rounded-lg bg-ink px-3 py-2 text-xs text-surface transition-all hover:bg-emphasis disabled:opacity-30"
           >
             Use
           </button>
