@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@variant dark (&:where(.dark, .dark *));
+@variant aura (&:where(.theme-aura, .theme-aura *));
 
 @theme {
   --color-cream: #F5F0EB;
@@ -27,12 +27,22 @@
     color: var(--charcoal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
-  .dark body {
-    background-color: var(--deep);
-    color: var(--cream);
+  /* ─── Aura Theme ─── */
+  .theme-aura body {
+    background-color: #F8F4FF;
+    color: #2D2640;
+  }
+
+  .theme-aura {
+    --cream: #F8F4FF;
+    --charcoal: #2D2640;
+    --sage: #9B8EC4;
+    --clay: #D4A0C0;
+    --mist: #E8E0F0;
+    --deep: #1C1528;
   }
 }
 
@@ -66,5 +76,127 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ─── Aura background blobs ─── */
+  .aura-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .aura-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: auraFloat 20s ease-in-out infinite;
+  }
+
+  .aura-blob-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #C4B5FD, #A78BFA, #DDD6FE);
+    top: -10%;
+    right: -10%;
+    animation-delay: 0s;
+  }
+
+  .aura-blob-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #FBCFE8, #F9A8D4, #FDE68A);
+    bottom: -5%;
+    left: -5%;
+    animation-delay: -7s;
+  }
+
+  .aura-blob-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #A7F3D0, #6EE7B7, #A5F3FC);
+    top: 40%;
+    left: 30%;
+    animation-delay: -14s;
+  }
+
+  @keyframes auraFloat {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(30px, -20px) scale(1.05);
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.95);
+    }
+    75% {
+      transform: translate(10px, 10px) scale(1.02);
+    }
+  }
+
+  /* Aura breathing orb */
+  @keyframes auraBreathe {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 0 40px rgba(167, 139, 250, 0.3),
+        0 0 80px rgba(196, 181, 253, 0.2);
+    }
+    50% {
+      transform: scale(1.15);
+      box-shadow:
+        0 0 60px rgba(167, 139, 250, 0.5),
+        0 0 120px rgba(249, 168, 212, 0.3);
+    }
+  }
+
+  .aura-breathing-circle {
+    background: linear-gradient(135deg, #C4B5FD, #F9A8D4, #A5F3FC);
+    animation: auraBreathe 8s ease-in-out infinite;
+  }
+
+  /* Aura glass card */
+  .aura-glass {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .aura-glass:hover {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(167, 139, 250, 0.3);
+  }
+
+  /* Aura input */
+  .aura-input {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: rgba(167, 139, 250, 0.2);
+  }
+
+  .aura-input:focus {
+    border-color: rgba(167, 139, 250, 0.5);
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+  }
+
+  /* Aura button */
+  .aura-btn {
+    background: linear-gradient(135deg, #7C3AED, #A78BFA);
+    color: white;
+  }
+
+  .aura-btn:hover {
+    background: linear-gradient(135deg, #6D28D9, #8B5CF6);
+  }
+
+  /* Aura badge */
+  .aura-badge {
+    background: rgba(167, 139, 250, 0.15);
+    color: #7C3AED;
   }
 }

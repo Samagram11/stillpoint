@@ -210,7 +210,7 @@ export default function MeditationPlayer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col bg-cream transition-colors dark:bg-deep"
+      className="fixed inset-0 z-50 flex flex-col bg-cream transition-colors aura:bg-[#F8F4FF]"
       onMouseMove={handleInteraction}
       onTouchStart={handleInteraction}
     >
@@ -222,7 +222,7 @@ export default function MeditationPlayer({
       >
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-sm text-charcoal/40 transition-colors hover:text-charcoal/70 dark:text-cream/40 dark:hover:text-cream/70"
+          className="flex items-center gap-2 text-sm text-charcoal/40 transition-colors hover:text-charcoal/70"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4">
             <path d="M19 12H5m0 0l7 7m-7-7l7-7" strokeLinecap="round" strokeLinejoin="round" />
@@ -239,8 +239,8 @@ export default function MeditationPlayer({
             }}
             className={`rounded-full px-3 py-1.5 text-xs transition-all ${
               showBreathGuide
-                ? "bg-sage/20 text-sage dark:bg-sage/30"
-                : "text-charcoal/30 hover:text-charcoal/50 dark:text-cream/30 dark:hover:text-cream/50"
+                ? "bg-sage/20 text-sage"
+                : "text-charcoal/30 hover:text-charcoal/50"
             }`}
           >
             Breathe
@@ -254,8 +254,8 @@ export default function MeditationPlayer({
             }}
             className={`rounded-full px-3 py-1.5 text-xs transition-all ${
               showTimer
-                ? "bg-sage/20 text-sage dark:bg-sage/30"
-                : "text-charcoal/30 hover:text-charcoal/50 dark:text-cream/30 dark:hover:text-cream/50"
+                ? "bg-sage/20 text-sage"
+                : "text-charcoal/30 hover:text-charcoal/50"
             }`}
           >
             Timer
@@ -267,13 +267,13 @@ export default function MeditationPlayer({
       <div className="flex flex-1 flex-col items-center overflow-hidden px-6">
         {/* Header */}
         <div className="mb-6 text-center">
-          <span className="mb-2 inline-block rounded-full bg-sage/10 px-2.5 py-0.5 text-xs text-sage dark:bg-sage/20">
+          <span className="mb-2 inline-block rounded-full bg-sage/10 px-2.5 py-0.5 text-xs text-sage">
             {typeInfo.name}
           </span>
-          <h2 className="font-display text-3xl font-light text-charcoal dark:text-cream sm:text-4xl">
+          <h2 className="font-display text-3xl font-light text-charcoal sm:text-4xl">
             {meditation.title}
           </h2>
-          <p className="mt-2 text-sm text-charcoal/40 dark:text-cream/40">
+          <p className="mt-2 text-sm text-charcoal/40">
             {meditation.capacity}
           </p>
         </div>
@@ -311,7 +311,7 @@ export default function MeditationPlayer({
           className="flex-1 overflow-y-auto pb-32 scrollbar-hide"
           style={{ maxWidth: "36rem" }}
         >
-          <div className="font-display text-lg font-light leading-[2] text-charcoal/80 dark:text-cream/80 sm:text-xl sm:leading-[2.1]">
+          <div className="font-display text-lg font-light leading-[2] text-charcoal/80 sm:text-xl sm:leading-[2.1]">
             {segments.map((seg, i) => {
               if (seg.type === "pause") {
                 return (
@@ -359,7 +359,7 @@ export default function MeditationPlayer({
 
       {/* Bottom audio controls */}
       <div
-        className={`border-t border-mist/50 bg-cream/90 px-6 py-4 backdrop-blur-sm transition-all duration-500 dark:border-cream/5 dark:bg-deep/90 ${
+        className={`border-t border-mist/50 bg-cream/90 px-6 py-4 backdrop-blur-sm transition-all duration-500 ${
           showControls || !isPlaying ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
       >
@@ -369,7 +369,7 @@ export default function MeditationPlayer({
             <button
               onClick={togglePlay}
               disabled={!isAudioLoaded}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream transition-all hover:bg-deep disabled:opacity-30 dark:bg-cream dark:text-deep dark:hover:bg-cream/80"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream transition-all hover:bg-deep disabled:opacity-30"
             >
               {isPlaying ? (
                 <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -392,14 +392,14 @@ export default function MeditationPlayer({
                 step={0.1}
                 value={currentTime}
                 onChange={handleSeek}
-                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-mist accent-sage dark:bg-cream/10"
+                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-mist accent-sage"
                 style={{
                   background: `linear-gradient(to right, var(--sage) ${progress}%, ${
                     "var(--mist)"
                   } ${progress}%)`,
                 }}
               />
-              <div className="flex justify-between text-xs tabular-nums text-charcoal/30 dark:text-cream/30">
+              <div className="flex justify-between text-xs tabular-nums text-charcoal/30">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
@@ -408,7 +408,7 @@ export default function MeditationPlayer({
             {/* Speed */}
             <button
               onClick={cycleSpeed}
-              className="shrink-0 rounded-full border border-mist px-2.5 py-1 text-xs text-charcoal/40 transition-colors hover:border-sage hover:text-charcoal/60 dark:border-cream/10 dark:text-cream/40 dark:hover:border-sage dark:hover:text-cream/60"
+              className="shrink-0 rounded-full border border-mist px-2.5 py-1 text-xs text-charcoal/40 transition-colors hover:border-sage hover:text-charcoal/60"
             >
               {SPEEDS[speedIndex]}x
             </button>
@@ -420,7 +420,7 @@ export default function MeditationPlayer({
                 <button
                   onClick={generateAudio}
                   disabled={isGeneratingAudio}
-                  className="w-full rounded-xl border border-mist bg-white/40 px-4 py-3 text-sm text-charcoal/60 transition-all hover:border-sage hover:text-charcoal disabled:opacity-50 dark:border-cream/10 dark:bg-cream/5 dark:text-cream/60 dark:hover:border-sage dark:hover:text-cream"
+                  className="w-full rounded-xl border border-mist bg-white/40 px-4 py-3 text-sm text-charcoal/60 transition-all hover:border-sage hover:text-charcoal disabled:opacity-50"
                 >
                   {isGeneratingAudio
                     ? "Generating audio..."
