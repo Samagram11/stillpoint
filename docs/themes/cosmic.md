@@ -5,12 +5,16 @@ Bright, girly space aesthetic with vibrant purple stars, hot pink planets, and d
 ## Colors
 
 ```css
---color-surface:   #1A0A2E;    /* Background — deep space violet */
---color-ink:       #F5E6FF;    /* Primary text — soft lavender white */
---color-accent:    #FF69B4;    /* Accent — hot pink */
---color-warm:      #C77DFF;    /* Secondary accent — vibrant purple */
---color-edge:      #3D1A6E;    /* Borders — dark purple */
---color-emphasis:  #FFB6E1;    /* Hover states — light pink */
+--color-surface:       #1A0A2E;    /* Background — deep space violet */
+--color-ink:           #F5E6FF;    /* Primary text — soft lavender white */
+--color-accent:        #FF69B4;    /* Accent — hot pink */
+--color-warm:          #C77DFF;    /* Secondary accent — vibrant purple */
+--color-edge:          #3D1A6E;    /* Borders — dark purple */
+--color-emphasis:      #FFB6E1;    /* Hover states — light pink */
+/* Dark theme tokens (consumed by .theme-dark shared overrides) */
+--dark-card-bg:        rgba(15, 5, 35, 0.85);   /* Translucent dark card */
+--dark-card-hover:     rgba(20, 10, 45, 0.9);   /* Card hover state */
+--dark-accent-bright:  #FF91CF;                  /* Brightened accent for readability */
 ```
 
 ## Background
@@ -32,7 +36,9 @@ Subtle radial gradient overlays add depth to the dark background.
 
 ## CSS Class
 
-Applied via `theme-cosmic` on `<html>`. Overrides `--color-*` variables and scopes component classes with `.theme-cosmic .cosmic-*` selectors in `globals.css`.
+Applied via `theme-cosmic` + `theme-dark` on `<html>`. The `theme-dark` class activates shared utility overrides (card backgrounds, text contrast, badge colors) that any dark theme gets for free. Theme-specific component styles are scoped with `.theme-cosmic .cosmic-*` selectors in `globals.css`.
+
+Scoped component wrappers: `cosmic-toggle` (ThemeSelector), `cosmic-voice-input` (VoiceSelector).
 
 ## Inspiration
 

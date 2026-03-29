@@ -25,6 +25,10 @@
     --color-warm: #C77DFF;
     --color-edge: #3D1A6E;
     --color-emphasis: #FFB6E1;
+    /* Dark theme tokens (consumed by .theme-dark shared overrides) */
+    --dark-card-bg: rgba(15, 5, 35, 0.85);
+    --dark-card-hover: rgba(20, 10, 45, 0.9);
+    --dark-accent-bright: #FF91CF;
   }
 
   /* ─── Aura Theme: override Tailwind color variables ─── */
@@ -361,29 +365,42 @@
 
 }
 
-/* Cosmic card contrast — !important needed to beat Tailwind's @supports color-mix utilities */
-.theme-cosmic .text-ink\/50 {
+/* ═══════════════════════════════════════════════════════
+   DARK THEME SHARED UTILITY OVERRIDES
+
+   Tailwind 4 generates opacity utilities (bg-white/40, text-ink/50)
+   in @layer utilities with @supports(color-mix) wrappers. These
+   cannot be beaten by @layer base or @layer components. !important
+   on unlayered selectors is the only reliable override.
+
+   Dark themes opt in by:
+   1. Being listed in DARK_THEMES in ThemeSelector.tsx
+   2. Defining --dark-card-bg, --dark-card-hover, --dark-accent-bright
+      in their .theme-{name} block
+   ═══════════════════════════════════════════════════════ */
+
+.theme-dark .text-ink\/50 {
   color: var(--color-ink) !important;
 }
-.theme-cosmic .text-ink\/40 {
+.theme-dark .text-ink\/40 {
   color: color-mix(in oklab, var(--color-ink) 90%, transparent) !important;
 }
-.theme-cosmic .text-ink\/30 {
+.theme-dark .text-ink\/30 {
   color: color-mix(in oklab, var(--color-ink) 80%, transparent) !important;
 }
-.theme-cosmic .bg-white\/40 {
-  background-color: rgba(15, 5, 35, 0.85) !important;
+.theme-dark .bg-white\/40 {
+  background-color: var(--dark-card-bg) !important;
 }
-.theme-cosmic .hover\:bg-white\/60:hover {
-  background-color: rgba(20, 10, 45, 0.9) !important;
+.theme-dark .hover\:bg-white\/60:hover {
+  background-color: var(--dark-card-hover) !important;
 }
-.theme-cosmic .bg-accent\/10 {
-  background-color: rgba(255, 105, 180, 0.2) !important;
+.theme-dark .bg-accent\/10 {
+  background-color: color-mix(in oklab, var(--color-accent) 20%, transparent) !important;
 }
-.theme-cosmic .text-accent {
-  color: #FF91CF !important;
+.theme-dark .text-accent {
+  color: var(--dark-accent-bright, var(--color-accent)) !important;
 }
-.theme-cosmic .hover\:text-ink\/70:hover {
+.theme-dark .hover\:text-ink\/70:hover {
   color: var(--color-ink) !important;
 }
 
