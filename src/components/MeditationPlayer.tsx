@@ -8,6 +8,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import Timer from "@/components/Timer";
 import AuraBackground from "@/components/AuraBackground";
 import CosmicBackground from "@/components/CosmicBackground";
+import SunnyBackground from "@/components/SunnyBackground";
 import { getStoredTheme, type Theme } from "@/components/ThemeSelector";
 import type { Meditation } from "@/lib/types";
 
@@ -235,6 +236,7 @@ export default function MeditationPlayer({
     >
       {theme === "aura" && <AuraBackground />}
       {theme === "cosmic" && <CosmicBackground />}
+      {theme === "sunny" && <SunnyBackground />}
 
       {/* Top bar */}
       <div

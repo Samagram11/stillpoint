@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-export type Theme = "minimalist" | "aura" | "cosmic";
+export type Theme = "minimalist" | "aura" | "cosmic" | "sunny";
 
 const THEMES: { id: Theme; label: string; icon: string }[] = [
   { id: "minimalist", label: "Minimal", icon: "○" },
   { id: "aura", label: "Aura", icon: "✦" },
   { id: "cosmic", label: "Cosmic", icon: "🚀" },
+  { id: "sunny", label: "Sunny", icon: "☀" },
 ];
 
 const DARK_THEMES: ReadonlySet<Theme> = new Set(["cosmic"]);
