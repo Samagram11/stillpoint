@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from "react";
 
-export type Theme = "minimalist" | "aura";
+export type Theme = "minimalist" | "aura" | "cosmic" | "sunny";
 
 const THEMES: { id: Theme; label: string; icon: string }[] = [
   { id: "minimalist", label: "Minimal", icon: "○" },
   { id: "aura", label: "Aura", icon: "✦" },
+  { id: "cosmic", label: "Cosmic", icon: "🚀" },
+  { id: "sunny", label: "Sunny", icon: "☀" },
 ];
+
+const DARK_THEMES: ReadonlySet<Theme> = new Set(["cosmic"]);
 
 interface ThemeSelectorProps {
   className?: string;
@@ -20,8 +24,11 @@ export function getStoredTheme(): Theme {
 
 export function applyTheme(theme: Theme) {
   const allClasses = THEMES.map((t) => `theme-${t.id}`);
-  document.documentElement.classList.remove(...allClasses);
+  document.documentElement.classList.remove(...allClasses, "theme-dark");
   document.documentElement.classList.add(`theme-${theme}`);
+  if (DARK_THEMES.has(theme)) {
+    document.documentElement.classList.add("theme-dark");
+  }
   localStorage.setItem("stillpoint-theme", theme);
   window.dispatchEvent(new CustomEvent("theme-change", { detail: theme }));
 }
@@ -45,7 +52,7 @@ export default function ThemeSelector({ className = "" }: ThemeSelectorProps) {
   if (!mounted) return null;
 
   return (
-    <div className={`inline-flex rounded-full border border-edge bg-white/50 p-0.5 ${className}`}>
+    <div className={`cosmic-toggle inline-flex rounded-full border border-edge bg-white/50 p-0.5 ${className}`}>
       {THEMES.map((t) => (
         <button
           key={t.id}

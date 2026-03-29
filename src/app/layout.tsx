@@ -28,6 +28,10 @@ const themeScript = `
   try {
     var theme = localStorage.getItem('stillpoint-theme') || 'minimalist';
     document.documentElement.classList.add('theme-' + theme);
+    var darkThemes = ['cosmic'];
+    if (darkThemes.indexOf(theme) !== -1) {
+      document.documentElement.classList.add('theme-dark');
+    }
   } catch(e) {}
 })();
 `;

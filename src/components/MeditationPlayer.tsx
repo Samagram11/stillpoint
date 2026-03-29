@@ -6,6 +6,10 @@ import type { LegacyMeditationType } from "@/lib/types";
 import BreathGuide from "@/components/BreathGuide";
 import AudioPlayer from "@/components/AudioPlayer";
 import Timer from "@/components/Timer";
+import AuraBackground from "@/components/AuraBackground";
+import CosmicBackground from "@/components/CosmicBackground";
+import SunnyBackground from "@/components/SunnyBackground";
+import { getStoredTheme, type Theme } from "@/components/ThemeSelector";
 import type { Meditation } from "@/lib/types";
 
 interface MeditationPlayerProps {
@@ -92,6 +96,7 @@ export default function MeditationPlayer({
   const [showTimer, setShowTimer] = useState(false);
   const [timerRunning, setTimerRunning] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [theme, setTheme] = useState<Theme>("minimalist");
 
   // Script
   const segments = useRef(parseScript(meditation.script)).current;
@@ -99,6 +104,16 @@ export default function MeditationPlayer({
 
   const hasAudio = !!meditation.audioBase64;
   const canGenerateAudio = !!elevenLabsKey;
+
+  // Track theme
+  useEffect(() => {
+    setTheme(getStoredTheme());
+    function handleThemeChange(e: Event) {
+      setTheme((e as CustomEvent).detail as Theme);
+    }
+    window.addEventListener("theme-change", handleThemeChange);
+    return () => window.removeEventListener("theme-change", handleThemeChange);
+  }, []);
 
   // Load bell sound
   useEffect(() => {
@@ -219,6 +234,10 @@ export default function MeditationPlayer({
       onMouseMove={handleInteraction}
       onTouchStart={handleInteraction}
     >
+      {theme === "aura" && <AuraBackground />}
+      {theme === "cosmic" && <CosmicBackground />}
+      {theme === "sunny" && <SunnyBackground />}
+
       {/* Top bar */}
       <div
         className={`flex items-center justify-between px-6 py-4 transition-opacity duration-500 ${
