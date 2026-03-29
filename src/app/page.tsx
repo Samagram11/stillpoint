@@ -35,6 +35,7 @@ export default function Home() {
   const [selectedVoiceId, setSelectedVoiceId] = useState("");
   const [hasElevenLabsKey, setHasElevenLabsKey] = useState(false);
   const [theme, setTheme] = useState<Theme>("minimalist");
+  const [importDate, setImportDate] = useState<string | null>(null);
 
   // Listen for theme changes
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function Home() {
               const parsed = JSON.parse(storedMeditations) as Meditation[];
               if (parsed.length > 0) {
                 setMeditations(parsed);
+                setImportDate(localStorage.getItem("stillpoint-import-date"));
                 setStep("gallery");
                 return;
               }
@@ -98,6 +100,7 @@ export default function Home() {
               const parsed = JSON.parse(storedMeditations) as Meditation[];
               if (parsed.length > 0) {
                 setMeditations(parsed);
+                setImportDate(localStorage.getItem("stillpoint-import-date"));
                 setStep("gallery");
                 return;
               }
@@ -183,13 +186,16 @@ export default function Home() {
         return;
       }
 
-      // Cache meditations
+      // Cache meditations and import timestamp
       localStorage.setItem(
         "stillpoint-meditations",
         JSON.stringify(generated)
       );
+      const now = new Date().toISOString();
+      localStorage.setItem("stillpoint-import-date", now);
 
       setMeditations(generated);
+      setImportDate(now);
       setProcessing({ stage: "complete", message: "Your meditations are ready." });
       setStep("gallery");
     },
@@ -278,7 +284,9 @@ export default function Home() {
     localStorage.removeItem("stillpoint-conversations");
     localStorage.removeItem("stillpoint-meditations");
     localStorage.removeItem("stillpoint-extraction");
+    localStorage.removeItem("stillpoint-import-date");
     setMeditations([]);
+    setImportDate(null);
     setSelectedMeditation(null);
     setProcessing({ stage: "idle", message: "" });
 
@@ -327,6 +335,27 @@ export default function Home() {
         {step === "upload" && (
           <div className="space-y-6 fade-in">
             <UploadZone onFileLoaded={handleFileLoaded} />
+            <details className="text-xs text-ink/40">
+              <summary className="cursor-pointer hover:text-ink/60 transition-colors">
+                How to export from Claude
+              </summary>
+              <ol className="mt-2 space-y-1 pl-4 list-decimal text-ink/40">
+                <li>
+                  Go to{" "}
+                  <a
+                    href="https://claude.ai/settings"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-ink/60"
+                  >
+                    claude.ai/settings
+                  </a>
+                </li>
+                <li>Click &quot;Export Data&quot;</li>
+                <li>Check your email for the download link</li>
+                <li>Download the ZIP and drop it here</li>
+              </ol>
+            </details>
             <div className="flex items-center justify-between">
               {!serverHasKeys && (
                 <button
@@ -352,6 +381,46 @@ export default function Home() {
 
         {step === "gallery" && (
           <div className="fade-in space-y-4">
+            {importDate && (() => {
+              const days = Math.floor(
+                (Date.now() - new Date(importDate).getTime()) / 86_400_000
+              );
+              if (days > 30) {
+                return (
+                  <div className="flex items-center justify-between rounded-lg bg-amber-50/60 px-4 py-3 text-xs">
+                    <span className="text-amber-700/80">
+                      Your meditations are over a month old
+                    </span>
+                    <button
+                      onClick={() => setStep("upload")}
+                      className="font-medium text-amber-700 hover:text-amber-800 transition-colors underline"
+                    >
+                      Update
+                    </button>
+                  </div>
+                );
+              }
+              if (days >= 7) {
+                return (
+                  <div className="flex items-center justify-between rounded-lg bg-edge/30 px-4 py-3 text-xs">
+                    <span className="text-ink/40">
+                      Updated {days} days ago
+                    </span>
+                    <button
+                      onClick={() => setStep("upload")}
+                      className="text-ink/40 hover:text-ink/60 transition-colors underline"
+                    >
+                      Update
+                    </button>
+                  </div>
+                );
+              }
+              return (
+                <p className="text-center text-xs text-ink/30">
+                  Updated {days === 0 ? "today" : days === 1 ? "yesterday" : `${days} days ago`}
+                </p>
+              );
+            })()}
             {hasElevenLabsKey && (
               <VoiceSelector
                 selectedVoiceId={selectedVoiceId}
