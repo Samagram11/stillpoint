@@ -52,7 +52,7 @@ export default function ProcessingView({ state, onRetry }: ProcessingViewProps) 
       />
 
       {/* Stage message */}
-      <p className="mt-8 font-display text-xl font-light text-charcoal/70">
+      <p className="mt-8 font-display text-xl font-light text-charcoal/70 dark:text-cream/70">
         {state.message || STAGE_MESSAGES[state.stage]}
         {isActive && <span className="inline-block w-6 text-left">{dots}</span>}
       </p>
@@ -69,7 +69,7 @@ export default function ProcessingView({ state, onRetry }: ProcessingViewProps) 
               <div
                 key={stage}
                 className={`h-1.5 w-12 rounded-full transition-all duration-500 ${
-                  isCurrentOrPast ? "bg-sage" : "bg-mist"
+                  isCurrentOrPast ? "bg-sage" : "bg-mist dark:bg-cream/10"
                 }`}
               />
             );
@@ -84,7 +84,7 @@ export default function ProcessingView({ state, onRetry }: ProcessingViewProps) 
           {onRetry && (
             <button
               onClick={onRetry}
-              className="mt-4 rounded-lg border border-mist px-4 py-2 text-sm text-charcoal/60 transition-colors hover:border-sage hover:text-charcoal"
+              className="mt-4 rounded-lg border border-mist px-4 py-2 text-sm text-charcoal/60 transition-colors hover:border-sage hover:text-charcoal dark:border-cream/10 dark:text-cream/60 dark:hover:border-sage dark:hover:text-cream"
             >
               Try again
             </button>
@@ -94,7 +94,7 @@ export default function ProcessingView({ state, onRetry }: ProcessingViewProps) 
 
       {/* Complete state */}
       {state.stage === "complete" && (
-        <p className="mt-2 text-sm text-charcoal/40">
+        <p className="mt-2 text-sm text-charcoal/40 dark:text-cream/40">
           Scroll down to see your meditations.
         </p>
       )}

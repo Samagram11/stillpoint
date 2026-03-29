@@ -5,8 +5,9 @@ import ApiKeySetup from "@/components/ApiKeySetup";
 import UploadZone from "@/components/UploadZone";
 import ProcessingView from "@/components/ProcessingView";
 import MeditationCard from "@/components/MeditationCard";
-import MeditationReader from "@/components/MeditationReader";
+import MeditationPlayer from "@/components/MeditationPlayer";
 import VoiceSelector from "@/components/VoiceSelector";
+import DarkModeToggle from "@/components/DarkModeToggle";
 import type { ApiKeyConfig, ProcessingState, Meditation, MeditationType } from "@/lib/types";
 // voices.ts kept for reference; VoiceSelector now fetches live from ElevenLabs API
 import { parseExport } from "@/lib/parseExport";
@@ -287,13 +288,16 @@ export default function Home() {
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center">
-      {/* Header — always visible except in reader */}
+      {/* Header — always visible except in player */}
       {step !== "reader" && (
         <div className="mb-12 text-center fade-in">
-          <h1 className="font-display text-5xl font-light tracking-tight text-charcoal">
+          <div className="flex justify-end mb-4">
+            <DarkModeToggle />
+          </div>
+          <h1 className="font-display text-5xl font-light tracking-tight text-charcoal dark:text-cream">
             stillpoint
           </h1>
-          <p className="mt-3 text-sm text-charcoal/50">
+          <p className="mt-3 text-sm text-charcoal/50 dark:text-cream/50">
             Your conversations, transformed into meditations.
           </p>
         </div>
@@ -315,14 +319,14 @@ export default function Home() {
               {!serverHasKeys && (
                 <button
                   onClick={() => setStep("keys")}
-                  className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60"
+                  className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60 dark:text-cream/30 dark:hover:text-cream/60"
                 >
                   Change API keys
                 </button>
               )}
               <button
                 onClick={handleClearData}
-                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 ml-auto"
+                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 ml-auto dark:text-cream/30"
               >
                 Clear all data
               </button>
@@ -353,13 +357,13 @@ export default function Home() {
             <div className="flex items-center justify-between pt-4">
               <button
                 onClick={() => setStep("upload")}
-                className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60"
+                className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60 dark:text-cream/30 dark:hover:text-cream/60"
               >
                 Upload new conversations
               </button>
               <button
                 onClick={handleClearData}
-                className="text-xs text-charcoal/30 transition-colors hover:text-red-400"
+                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 dark:text-cream/30"
               >
                 Clear all data
               </button>
@@ -368,7 +372,7 @@ export default function Home() {
         )}
 
         {step === "reader" && selectedMeditation && (
-          <MeditationReader
+          <MeditationPlayer
             meditation={selectedMeditation}
             voiceId={selectedVoiceId}
             elevenLabsKey={

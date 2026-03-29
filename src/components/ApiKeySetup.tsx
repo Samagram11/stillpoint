@@ -38,7 +38,7 @@ export default function ApiKeySetup({
       <div>
         <label
           htmlFor="anthropic-key"
-          className="mb-2 block text-sm font-medium text-charcoal/70"
+          className="mb-2 block text-sm font-medium text-charcoal/70 dark:text-cream/70"
         >
           Anthropic API Key
           <span className="ml-1 text-clay">*</span>
@@ -49,10 +49,10 @@ export default function ApiKeySetup({
           value={anthropicKey}
           onChange={(e) => setAnthropicKey(e.target.value)}
           placeholder="sk-ant-..."
-          className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none"
+          className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none dark:border-cream/10 dark:bg-cream/5 dark:text-cream dark:placeholder:text-cream/30"
           required
         />
-        <p className="mt-1.5 text-xs text-charcoal/40">
+        <p className="mt-1.5 text-xs text-charcoal/40 dark:text-cream/40">
           Get yours at{" "}
           <a
             href="https://console.anthropic.com"
@@ -69,10 +69,10 @@ export default function ApiKeySetup({
         <div className="fade-in">
           <label
             htmlFor="elevenlabs-key"
-            className="mb-2 block text-sm font-medium text-charcoal/70"
+            className="mb-2 block text-sm font-medium text-charcoal/70 dark:text-cream/70"
           >
             ElevenLabs API Key
-            <span className="ml-1 text-xs text-charcoal/40">(optional)</span>
+            <span className="ml-1 text-xs text-charcoal/40 dark:text-cream/40">(optional)</span>
           </label>
           <input
             id="elevenlabs-key"
@@ -80,9 +80,9 @@ export default function ApiKeySetup({
             value={elevenLabsKey}
             onChange={(e) => setElevenLabsKey(e.target.value)}
             placeholder="xi-..."
-            className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none"
+            className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none dark:border-cream/10 dark:bg-cream/5 dark:text-cream dark:placeholder:text-cream/30"
           />
-          <p className="mt-1.5 text-xs text-charcoal/40">
+          <p className="mt-1.5 text-xs text-charcoal/40 dark:text-cream/40">
             For audio playback. Without this, meditations are text-only.
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function ApiKeySetup({
         <button
           type="button"
           onClick={() => setShowElevenLabs(true)}
-          className="text-sm text-charcoal/40 transition-colors hover:text-sage"
+          className="text-sm text-charcoal/40 transition-colors hover:text-sage dark:text-cream/40"
         >
           + Add ElevenLabs key for audio
         </button>
@@ -99,7 +99,7 @@ export default function ApiKeySetup({
       <button
         type="submit"
         disabled={!anthropicKey.trim()}
-        className="w-full rounded-lg bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-all hover:bg-deep disabled:cursor-not-allowed disabled:opacity-30"
+        className="w-full rounded-lg bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-all hover:bg-deep disabled:cursor-not-allowed disabled:opacity-30 dark:bg-cream dark:text-deep dark:hover:bg-cream/80"
       >
         Continue
       </button>
