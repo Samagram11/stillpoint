@@ -182,6 +182,15 @@ ELEVENLABS_API_KEY=              # Optional — text-only mode works without thi
 
 ---
 
+## Git Workflow
+
+- Never push directly to main — always use a branch + PR
+- Never force push
+- Always run `npm run build` before committing to catch type errors
+- Use descriptive branch names (e.g., `phase-5-player-polish`, `fix-audio-fallback`)
+
+---
+
 ## Coding Conventions
 
 - TypeScript strict mode, no `any`
