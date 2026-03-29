@@ -107,7 +107,7 @@ export default function VoiceSelector({
       </div>
 
       {showCustom && (
-        <div className="fade-in flex gap-2">
+        <div className="cosmic-voice-input fade-in flex gap-2">
           <input
             type="text"
             value={customId}
