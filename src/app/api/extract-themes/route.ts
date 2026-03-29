@@ -152,11 +152,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Parse the JSON from Claude's response (may be wrapped in markdown code fences)
-    const jsonStr = textBlock.text
-      .replace(/^```json?\s*/m, "")
-      .replace(/```\s*$/m, "")
-      .trim();
+    // Parse the JSON from Claude's response (may be wrapped in markdown code fences
+    // or preceded/followed by conversational text)
+    const raw = textBlock.text;
+    const fenceMatch = raw.match(/```json?\s*\n?([\s\S]*?)```/);
+    const jsonStr = fenceMatch
+      ? fenceMatch[1].trim()
+      : raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1);
 
     const extraction: ExtractionResponse = JSON.parse(jsonStr);
 

@@ -143,10 +143,11 @@ Remember: universal language only. No specific life details. But make it feel de
       );
     }
 
-    const jsonStr = textBlock.text
-      .replace(/^```json?\s*/m, "")
-      .replace(/```\s*$/m, "")
-      .trim();
+    const raw = textBlock.text;
+    const fenceMatch = raw.match(/```json?\s*\n?([\s\S]*?)```/);
+    const jsonStr = fenceMatch
+      ? fenceMatch[1].trim()
+      : raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1);
 
     const meditation = JSON.parse(jsonStr) as {
       title: string;
