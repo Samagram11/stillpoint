@@ -6,7 +6,6 @@ import UploadZone from "@/components/UploadZone";
 import ProcessingView from "@/components/ProcessingView";
 import MeditationCard from "@/components/MeditationCard";
 import MeditationPlayer from "@/components/MeditationPlayer";
-import VoiceSelector from "@/components/VoiceSelector";
 import ThemeSelector from "@/components/ThemeSelector";
 import AuraBackground from "@/components/AuraBackground";
 import CosmicBackground from "@/components/CosmicBackground";
@@ -21,10 +20,10 @@ import {
   type ExtractionResult,
 } from "@/lib/generateMeditation";
 
-type Step = "keys" | "upload" | "processing" | "gallery" | "reader";
+type Step = "landing" | "keys" | "upload" | "processing" | "gallery" | "reader";
 
 export default function Home() {
-  const [step, setStep] = useState<Step>("keys");
+  const [step, setStep] = useState<Step>("landing");
   const [apiKeys, setApiKeys] = useState<ApiKeyConfig | null>(null);
   const [processing, setProcessing] = useState<ProcessingState>({
     stage: "idle",
@@ -34,7 +33,6 @@ export default function Home() {
   const [selectedMeditation, setSelectedMeditation] =
     useState<Meditation | null>(null);
   const [serverHasKeys, setServerHasKeys] = useState(false);
-  const [selectedVoiceId, setSelectedVoiceId] = useState("");
   const [hasElevenLabsKey, setHasElevenLabsKey] = useState(false);
   const [theme, setTheme] = useState<Theme>("minimalist");
   const [importDate, setImportDate] = useState<string | null>(null);
@@ -329,6 +327,68 @@ export default function Home() {
 
       {/* Steps */}
       <div className={step === "reader" ? "w-full" : "w-full max-w-md"}>
+        {step === "landing" && (
+          <div className="fade-in space-y-10 text-center">
+            <p className="text-lg font-light leading-relaxed text-ink/70">
+              Stillpoint creates 100% personalized meditations based on
+              themes from your Claude conversations.
+            </p>
+
+            <div className="space-y-6">
+              <div className="rounded-xl border border-edge bg-white/40 p-5 text-center">
+                <h3 className="mb-2 font-display text-xl font-light text-ink">Completely private</h3>
+                <p className="text-sm leading-relaxed text-ink/50">
+                  Your conversations never leave your device. Everything is
+                  parsed in your browser — no one can ever see your data.
+                  No accounts, no tracking, no servers storing anything.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-edge bg-white/40 p-5 text-center">
+                <h3 className="mb-2 font-display text-xl font-light text-ink">Deeply personal</h3>
+                <p className="text-sm leading-relaxed text-ink/50">
+                  Not generic &ldquo;calm your mind&rdquo; scripts. Meditations crafted
+                  from the emotional patterns and growth edges in your own
+                  conversations — targeting what you actually need right now.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-edge bg-white/40 p-5 text-center">
+                <h3 className="mb-2 font-display text-xl font-light text-ink">Beautiful themes</h3>
+                <p className="text-sm leading-relaxed text-ink/50">
+                  Four visual themes to match your mood — try the selector above.
+                  Run locally with Claude Code and use the Theme Designer skill
+                  to create your own.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-edge bg-white/40 p-5 text-center">
+                <h3 className="mb-2 font-display text-xl font-light text-ink">Listen or read</h3>
+                <p className="text-sm leading-relaxed text-ink/50">
+                  Generate high-quality audio with ElevenLabs voices, listen
+                  with built-in browser voices, or read at your own pace with a
+                  guided teleprompter.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-edge bg-white/40 p-5 text-center">
+                <h3 className="mb-2 font-display text-xl font-light text-ink">Your own space</h3>
+                <p className="text-sm leading-relaxed text-ink/50">
+                  Open source and free. Deploy to Vercel in minutes for a
+                  personal meditation app you can reach from any device.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setStep(serverHasKeys ? "upload" : "keys")}
+              className="w-full rounded-lg bg-ink px-6 py-3 text-sm font-medium text-surface transition-all hover:bg-emphasis aura-btn"
+            >
+              Get Started
+            </button>
+          </div>
+        )}
+
         {step === "keys" && (
           <ApiKeySetup
             onComplete={handleKeysComplete}
@@ -355,6 +415,7 @@ export default function Home() {
                     claude.ai/settings
                   </a>
                 </li>
+                <li>Click &quot;Privacy&quot;</li>
                 <li>Click &quot;Export Data&quot;</li>
                 <li>Check your email for the download link</li>
                 <li>Download the ZIP and drop it here</li>
@@ -425,13 +486,6 @@ export default function Home() {
                 </p>
               );
             })()}
-            {hasElevenLabsKey && (
-              <VoiceSelector
-                selectedVoiceId={selectedVoiceId}
-                onSelect={setSelectedVoiceId}
-                elevenLabsKey={apiKeys?.elevenLabsKey}
-              />
-            )}
             {meditations.map((m) => (
               <MeditationCard
                 key={m.id}
@@ -459,7 +513,6 @@ export default function Home() {
         {step === "reader" && selectedMeditation && (
           <MeditationPlayer
             meditation={selectedMeditation}
-            voiceId={selectedVoiceId}
             elevenLabsKey={
               hasElevenLabsKey
                 ? apiKeys?.elevenLabsKey

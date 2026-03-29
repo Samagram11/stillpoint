@@ -134,8 +134,9 @@ function WebSpeechPlayer({ script }: { script: string }) {
     }
 
     function loadVoices() {
+      const allowedNames = ["Moira", "Karen", "Daniel", "Rishi", "Tessa"];
       const available = speechSynthesis.getVoices().filter(
-        (v) => v.lang.startsWith("en")
+        (v) => allowedNames.some((name) => v.name.includes(name))
       );
       setVoices(available);
     }
