@@ -5,12 +5,12 @@ Default theme. Warm minimalism — Kinfolk magazine meets high-end therapy offic
 ## Colors
 
 ```css
---color-cream:     #F5F0EB;    /* Background */
---color-charcoal:  #2C2C2C;    /* Primary text */
---color-sage:      #8B9D83;    /* Accent, interactive */
---color-clay:      #C4A882;    /* Secondary accent */
---color-mist:      #D4D0CB;    /* Borders, subtle UI */
---color-deep:      #1A1A1A;    /* Hover states */
+--color-surface:   #F5F0EB;    /* Background */
+--color-ink:       #2C2C2C;    /* Primary text */
+--color-accent:    #8B9D83;    /* Accent, interactive */
+--color-warm:      #C4A882;    /* Secondary accent */
+--color-edge:      #D4D0CB;    /* Borders, subtle UI */
+--color-emphasis:  #1A1A1A;    /* Hover states */
 ```
 
 ## Typography
@@ -27,12 +27,12 @@ Default theme. Warm minimalism — Kinfolk magazine meets high-end therapy offic
 
 ## Component Styling
 
-- **Cards:** `bg-white/40 border border-mist`, subtle hover lift
-- **Inputs:** `bg-white/50 border border-mist`, sage focus ring
-- **Buttons:** `bg-charcoal text-cream`, darkens on hover
-- **Breathing circle:** Solid sage with scale/opacity animation
-- **Badges:** `bg-sage/10 text-sage`
+- **Cards:** `bg-white/40 border border-edge`, subtle hover lift
+- **Inputs:** `bg-white/50 border border-edge`, accent focus ring
+- **Buttons:** `bg-ink text-surface`, darkens on hover
+- **Breathing circle:** Solid accent with scale/opacity animation
+- **Badges:** `bg-accent/10 text-accent`
 
 ## CSS Class
 
-Applied via `theme-minimalist` on `<html>`. This is the default — no variable overrides needed, uses the `@theme` values directly.
+Applied via `theme-minimalist` on `<html>`. This is the default — no variable overrides needed, uses the `@theme` values directly. Tokens: `surface`, `ink`, `accent`, `warm`, `edge`, `emphasis`.

@@ -30,12 +30,12 @@ define all 6 color variables:
 
 ```css
 .theme-{name} {
-  --color-cream:     /* Background */
-  --color-charcoal:  /* Primary text */
-  --color-sage:      /* Accent, interactive elements */
-  --color-clay:      /* Secondary accent */
-  --color-mist:      /* Borders, subtle UI */
-  --color-deep:      /* Hover states, emphasis */
+  --color-surface:   /* Background */
+  --color-ink:       /* Primary text */
+  --color-accent:    /* Accent, interactive elements */
+  --color-warm:      /* Secondary accent */
+  --color-edge:      /* Borders, subtle UI */
+  --color-emphasis:  /* Hover states, emphasis */
 }
 ```
 
@@ -88,22 +88,22 @@ a `{Name}Background.tsx` component and conditionally render it in
 
 ## Design Constraints
 
-- **Contrast:** Background (`--color-cream`) and text (`--color-charcoal`)
+- **Contrast:** Background (`--color-surface`) and text (`--color-ink`)
   must meet WCAG AA contrast ratio (4.5:1 minimum). The player view is
   full-screen — the theme must remain readable at that scale.
-- **Accent visibility:** `--color-sage` is used on interactive elements
+- **Accent visibility:** `--color-accent` is used on interactive elements
   (buttons, focus rings, badges). It must be clearly visible against
-  both `--color-cream` and white/transparent card backgrounds.
+  both `--color-surface` and white/transparent card backgrounds.
 - **Transition:** The app applies `transition: background-color 0.5s ease`
   on body. Avoid colors that flash harshly during theme switches.
 - **No hard-coded colors in components.** Components use Tailwind classes
-  like `bg-cream`, `text-charcoal`, `border-mist`. If a component has a
+  like `bg-surface`, `text-ink`, `border-edge`. If a component has a
   raw hex value, it won't respond to theme changes.
 
 ## Existing Themes
 
-- **Minimalist** (default) — Warm cream/sage/charcoal. No background
-  effects. Cards are `bg-white/40`. See `docs/themes/minimalist.md`.
+- **Minimalist** (default) — Warm neutrals. No background effects.
+  Cards are `bg-white/40`. See `docs/themes/minimalist.md`.
 - **Aura** — Lavender/pink/mint with floating gradient blobs and frosted
   glass cards. Uses `AuraBackground.tsx` + `.theme-aura .aura-*` classes.
   See `docs/themes/aura.md`.

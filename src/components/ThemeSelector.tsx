@@ -45,15 +45,15 @@ export default function ThemeSelector({ className = "" }: ThemeSelectorProps) {
   if (!mounted) return null;
 
   return (
-    <div className={`inline-flex rounded-full border border-mist bg-white/50 p-0.5 ${className}`}>
+    <div className={`inline-flex rounded-full border border-edge bg-white/50 p-0.5 ${className}`}>
       {THEMES.map((t) => (
         <button
           key={t.id}
           onClick={() => select(t.id)}
           className={`rounded-full px-3 py-1 text-xs transition-all ${
             theme === t.id
-              ? "bg-charcoal text-cream shadow-sm"
-              : "text-charcoal/40 hover:text-charcoal/70"
+              ? "bg-ink text-surface shadow-sm"
+              : "text-ink/40 hover:text-ink/70"
           }`}
         >
           {t.icon} {t.label}

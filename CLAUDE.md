@@ -47,7 +47,7 @@ Next.js 16 (App Router) · TypeScript strict · Tailwind CSS 4 · Claude API (So
 
 Users choose between themes via a pill selector (`ThemeSelector.tsx`). Themes work by overriding Tailwind's `--color-*` CSS variables on `<html>` via `.theme-{name}` classes. All defined in `src/styles/globals.css`.
 
-- **[Minimalist](docs/themes/minimalist.md)** — Warm minimalism, cream/sage/charcoal. Default.
+- **[Minimalist](docs/themes/minimalist.md)** — Warm minimalism. Default. Tokens: surface/ink/accent/warm/edge/emphasis.
 - **[Aura](docs/themes/aura.md)** — Iridescent gradient blobs, frosted glass, lavender/pink/mint.
 
 To add a new theme: add entry to `THEMES` array in `ThemeSelector.tsx`, add `--color-*` overrides under `.theme-{name}` in `globals.css`, create `docs/themes/{name}.md`.

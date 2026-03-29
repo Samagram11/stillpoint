@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #F5F0EB;
-  --color-charcoal: #2C2C2C;
-  --color-sage: #8B9D83;
-  --color-clay: #C4A882;
-  --color-mist: #D4D0CB;
-  --color-deep: #1A1A1A;
+  --color-surface: #F5F0EB;
+  --color-ink: #2C2C2C;
+  --color-accent: #8B9D83;
+  --color-warm: #C4A882;
+  --color-edge: #D4D0CB;
+  --color-emphasis: #1A1A1A;
 }
 
 @layer base {
@@ -19,12 +19,12 @@
 
   /* ─── Aura Theme: override Tailwind color variables ─── */
   .theme-aura {
-    --color-cream: #F8F4FF;
-    --color-charcoal: #2D2640;
-    --color-sage: #9B8EC4;
-    --color-clay: #D4A0C0;
-    --color-mist: #E8E0F0;
-    --color-deep: #1C1528;
+    --color-surface: #F8F4FF;
+    --color-ink: #2D2640;
+    --color-accent: #9B8EC4;
+    --color-warm: #D4A0C0;
+    --color-edge: #E8E0F0;
+    --color-emphasis: #1C1528;
   }
 }
 

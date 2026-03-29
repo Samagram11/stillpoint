@@ -42,7 +42,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen bg-cream text-charcoal antialiased">
+      <body className="min-h-screen bg-surface text-ink antialiased">
         <main className="mx-auto max-w-3xl px-6 py-12">{children}</main>
       </body>
     </html>

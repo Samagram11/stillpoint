@@ -121,7 +121,7 @@ export default function BreathGuide({
         aria-label={active ? "Stop breathing guide" : "Start breathing guide"}
       >
         <div
-          className={`${circleSize} rounded-full bg-sage transition-all duration-1000 ease-in-out`}
+          className={`${circleSize} rounded-full bg-accent transition-all duration-1000 ease-in-out`}
           style={{
             transform: `scale(${getScale()})`,
             opacity: getOpacity(),
@@ -129,21 +129,21 @@ export default function BreathGuide({
         />
         <div className="absolute flex flex-col items-center">
           {phase === "idle" ? (
-            <span className={`${textSize} text-charcoal/60`}>
+            <span className={`${textSize} text-ink/60`}>
               Box
             </span>
           ) : (
-            <span className={`${countdownSize} font-light text-charcoal/80`}>
+            <span className={`${countdownSize} font-light text-ink/80`}>
               {countdown}
             </span>
           )}
         </div>
       </button>
 
-      <span className={`${textSize} font-light tracking-wide text-charcoal/50`}>
+      <span className={`${textSize} font-light tracking-wide text-ink/50`}>
         {PHASE_LABELS[phase]}
         {active && cycleCount > 0 && phase === "inhale" && countdown === PHASE_DURATIONS.inhale && (
-          <span className="ml-2 text-charcoal/30">· cycle {cycleCount + 1}</span>
+          <span className="ml-2 text-ink/30">· cycle {cycleCount + 1}</span>
         )}
       </span>
     </div>

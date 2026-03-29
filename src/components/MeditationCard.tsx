@@ -28,25 +28,25 @@ export default function MeditationCard({
   return (
     <button
       onClick={() => onSelect(meditation)}
-      className="fade-in group w-full rounded-xl border border-mist bg-white/40 p-6 text-left transition-all hover:border-sage/50 hover:bg-white/60 aura-glass"
+      className="fade-in group w-full rounded-xl border border-edge bg-white/40 p-6 text-left transition-all hover:border-accent/50 hover:bg-white/60 aura-glass"
     >
       <div className="mb-3 flex items-start justify-between">
-        <h3 className="font-display text-2xl font-light text-charcoal">
+        <h3 className="font-display text-2xl font-light text-ink">
           {meditation.title}
         </h3>
-        <span className="ml-3 shrink-0 rounded-full bg-sage/10 px-2.5 py-0.5 text-xs text-sage">
+        <span className="ml-3 shrink-0 rounded-full bg-accent/10 px-2.5 py-0.5 text-xs text-accent">
           {displayInfo.name}
         </span>
       </div>
 
-      <p className="text-sm leading-relaxed text-charcoal/50">
+      <p className="text-sm leading-relaxed text-ink/50">
         {meditation.capacity}
       </p>
 
-      <div className="mt-4 flex items-center gap-3 text-xs text-charcoal/30">
+      <div className="mt-4 flex items-center gap-3 text-xs text-ink/30">
         <span>{meditation.duration} min</span>
         <span>·</span>
-        <span className="transition-colors group-hover:text-sage">
+        <span className="transition-colors group-hover:text-accent">
           Read meditation →
         </span>
       </div>
