@@ -19,14 +19,32 @@ export default function ApiKeySetup({
     initialConfig?.elevenLabsKey ?? ""
   );
   const [showElevenLabs, setShowElevenLabs] = useState(false);
+  const [error, setError] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!anthropicKey.trim()) return;
+    setError("");
+
+    const aKey = anthropicKey.trim();
+    const eKey = elevenLabsKey.trim();
+
+    if (!aKey) return;
+
+    // Catch swapped keys: ElevenLabs key in Anthropic field
+    if (aKey.startsWith("sk_") && !aKey.startsWith("sk-ant-")) {
+      setError("That looks like an ElevenLabs key (starts with sk_). The Anthropic key starts with sk-ant-. Did you paste it in the wrong field?");
+      return;
+    }
+
+    // Catch Anthropic key in ElevenLabs field
+    if (eKey && eKey.startsWith("sk-ant-")) {
+      setError("That looks like an Anthropic key in the ElevenLabs field. ElevenLabs keys start with sk_ or xi-.");
+      return;
+    }
 
     const config: ApiKeyConfig = {
-      anthropicKey: anthropicKey.trim(),
-      ...(elevenLabsKey.trim() && { elevenLabsKey: elevenLabsKey.trim() }),
+      anthropicKey: aKey,
+      ...(eKey && { elevenLabsKey: eKey }),
     };
 
     localStorage.setItem("stillpoint-keys", JSON.stringify(config));
@@ -79,7 +97,7 @@ export default function ApiKeySetup({
             type="password"
             value={elevenLabsKey}
             onChange={(e) => setElevenLabsKey(e.target.value)}
-            placeholder="xi-..."
+            placeholder="sk_... or xi-..."
             className="w-full rounded-lg border border-edge bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-ink/30 focus:border-accent focus:outline-none aura-input"
           />
           <p className="mt-1.5 text-xs text-ink/40">
@@ -94,6 +112,12 @@ export default function ApiKeySetup({
         >
           + Add ElevenLabs key for audio
         </button>
+      )}
+
+      {error && (
+        <p className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-xs text-red-700">
+          {error}
+        </p>
       )}
 
       <button
