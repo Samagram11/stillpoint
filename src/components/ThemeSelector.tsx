@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 
-export type Theme = "minimalist" | "aura";
+export type Theme = "minimalist" | "aura" | "cosmic";
 
 const THEMES: { id: Theme; label: string; icon: string }[] = [
   { id: "minimalist", label: "Minimal", icon: "○" },
   { id: "aura", label: "Aura", icon: "✦" },
+  { id: "cosmic", label: "Cosmic", icon: "🚀" },
 ];
 
 interface ThemeSelectorProps {

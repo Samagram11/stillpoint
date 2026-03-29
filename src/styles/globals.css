@@ -17,6 +17,16 @@
     transition: background-color 0.5s ease, color 0.5s ease;
   }
 
+  /* ─── Cosmic Theme: bright girly space ─── */
+  .theme-cosmic {
+    --color-surface: #1A0A2E;
+    --color-ink: #F5E6FF;
+    --color-accent: #FF69B4;
+    --color-warm: #C77DFF;
+    --color-edge: #3D1A6E;
+    --color-emphasis: #FFB6E1;
+  }
+
   /* ─── Aura Theme: override Tailwind color variables ─── */
   .theme-aura {
     --color-surface: #F8F4FF;
@@ -167,5 +177,171 @@
 
   .theme-aura .aura-btn:hover {
     background: linear-gradient(135deg, #6D28D9, #8B5CF6);
+  }
+
+  /* ─── Cosmic background ─── */
+  .cosmic-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 20% 50%, rgba(120, 40, 200, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(100, 50, 180, 0.1) 0%, transparent 60%);
+  }
+
+  /* Twinkling stars */
+  .cosmic-star {
+    position: absolute;
+    border-radius: 50%;
+    animation: cosmicTwinkle 2s ease-in-out infinite;
+  }
+
+  .cosmic-star-1 { width: 4px; height: 4px; background: #E8A0FF; top: 8%; left: 15%; animation-delay: 0s; }
+  .cosmic-star-2 { width: 6px; height: 6px; background: #FF69B4; top: 12%; right: 22%; animation-delay: 0.5s; }
+  .cosmic-star-3 { width: 3px; height: 3px; background: #FFD700; top: 25%; left: 45%; animation-delay: 1.2s; }
+  .cosmic-star-4 { width: 5px; height: 5px; background: #C77DFF; top: 35%; right: 10%; animation-delay: 0.3s; }
+  .cosmic-star-5 { width: 4px; height: 4px; background: #FF99CC; top: 50%; left: 8%; animation-delay: 1.8s; }
+  .cosmic-star-6 { width: 3px; height: 3px; background: #FFB6E1; top: 60%; left: 65%; animation-delay: 0.7s; }
+  .cosmic-star-7 { width: 5px; height: 5px; background: #E8A0FF; top: 70%; right: 30%; animation-delay: 1.5s; }
+  .cosmic-star-8 { width: 4px; height: 4px; background: #FF69B4; top: 80%; left: 35%; animation-delay: 0.9s; }
+  .cosmic-star-9 { width: 6px; height: 6px; background: #C77DFF; top: 15%; left: 75%; animation-delay: 2s; }
+  .cosmic-star-10 { width: 3px; height: 3px; background: #FFD700; top: 45%; right: 50%; animation-delay: 1s; }
+  .cosmic-star-11 { width: 4px; height: 4px; background: #FF99CC; top: 90%; left: 55%; animation-delay: 0.4s; }
+  .cosmic-star-12 { width: 5px; height: 5px; background: #E8A0FF; top: 5%; left: 90%; animation-delay: 1.6s; }
+
+  @keyframes cosmicTwinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  /* Planets */
+  .cosmic-planet {
+    position: absolute;
+    border-radius: 50%;
+    animation: cosmicFloat 25s ease-in-out infinite;
+  }
+
+  .cosmic-planet-1 {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 35% 35%, #FF8EC8, #FF1493, #C2185B);
+    box-shadow: 0 0 30px rgba(255, 20, 147, 0.4), inset -8px -8px 20px rgba(0, 0, 0, 0.2);
+    top: 10%;
+    right: 12%;
+    animation-delay: 0s;
+  }
+
+  .cosmic-planet-2 {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 35% 35%, #D8A0FF, #9B30FF, #6A0DAD);
+    box-shadow: 0 0 25px rgba(155, 48, 255, 0.4), inset -5px -5px 15px rgba(0, 0, 0, 0.2);
+    bottom: 20%;
+    left: 8%;
+    animation-delay: -8s;
+  }
+
+  .cosmic-planet-3 {
+    width: 35px;
+    height: 35px;
+    background: radial-gradient(circle at 35% 35%, #FFB7E0, #FF69B4, #FF1493);
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.35), inset -4px -4px 10px rgba(0, 0, 0, 0.15);
+    top: 55%;
+    right: 35%;
+    animation-delay: -16s;
+  }
+
+  @keyframes cosmicFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(10px, -15px) rotate(3deg); }
+    50% { transform: translate(-8px, 10px) rotate(-2deg); }
+    75% { transform: translate(12px, 5px) rotate(1deg); }
+  }
+
+  /* Rocket ships */
+  .cosmic-rocket {
+    position: absolute;
+    font-size: 24px;
+    animation: cosmicDrift 30s linear infinite;
+    opacity: 0.6;
+  }
+
+  .cosmic-rocket-1 {
+    top: 30%;
+    left: -30px;
+    animation-delay: 0s;
+  }
+
+  .cosmic-rocket-2 {
+    top: 65%;
+    left: -30px;
+    animation-delay: -15s;
+  }
+
+  @keyframes cosmicDrift {
+    0% { transform: translate(0, 0) rotate(-30deg); opacity: 0; }
+    5% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translate(110vw, -20vh) rotate(-30deg); opacity: 0; }
+  }
+
+  /* Cosmic breathing circle */
+  .theme-cosmic .breathing-circle {
+    background: linear-gradient(135deg, #FF69B4, #C77DFF, #9B30FF) !important;
+    animation: cosmicBreathe 8s ease-in-out infinite;
+  }
+
+  @keyframes cosmicBreathe {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 0 40px rgba(255, 105, 180, 0.4),
+        0 0 80px rgba(199, 125, 255, 0.2);
+    }
+    50% {
+      transform: scale(1.15);
+      box-shadow:
+        0 0 60px rgba(255, 105, 180, 0.6),
+        0 0 120px rgba(155, 48, 255, 0.3);
+    }
+  }
+
+  /* Cosmic glass card */
+  .theme-cosmic .cosmic-glass {
+    background: rgba(30, 15, 60, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(199, 125, 255, 0.3);
+  }
+
+  .theme-cosmic .cosmic-glass:hover {
+    background: rgba(40, 20, 80, 0.7);
+    border-color: rgba(255, 105, 180, 0.4);
+  }
+
+  /* Cosmic input */
+  .theme-cosmic .cosmic-input {
+    background: rgba(30, 15, 60, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: rgba(199, 125, 255, 0.3);
+    color: #F5E6FF;
+  }
+
+  .theme-cosmic .cosmic-input:focus {
+    border-color: rgba(255, 105, 180, 0.5);
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.15);
+  }
+
+  /* Cosmic button */
+  .theme-cosmic .cosmic-btn {
+    background: linear-gradient(135deg, #FF1493, #9B30FF);
+    color: white;
+  }
+
+  .theme-cosmic .cosmic-btn:hover {
+    background: linear-gradient(135deg, #FF69B4, #C77DFF);
   }
 }

@@ -9,6 +9,7 @@ import MeditationPlayer from "@/components/MeditationPlayer";
 import VoiceSelector from "@/components/VoiceSelector";
 import ThemeSelector from "@/components/ThemeSelector";
 import AuraBackground from "@/components/AuraBackground";
+import CosmicBackground from "@/components/CosmicBackground";
 import { getStoredTheme, type Theme } from "@/components/ThemeSelector";
 import type { ApiKeyConfig, ProcessingState, Meditation, MeditationApproach } from "@/lib/types";
 // voices.ts kept for reference; VoiceSelector now fetches live from ElevenLabs API
@@ -307,6 +308,7 @@ export default function Home() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center">
       {theme === "aura" && <AuraBackground />}
+      {theme === "cosmic" && <CosmicBackground />}
 
       {/* Header — always visible except in player */}
       {step !== "reader" && (
