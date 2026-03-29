@@ -78,8 +78,8 @@ export default function UploadZone({ onFileLoaded }: UploadZoneProps) {
         }}
         className={`cursor-pointer rounded-xl border-2 border-dashed p-12 text-center transition-all ${
           isDragging
-            ? "border-sage bg-sage/5"
-            : "border-mist hover:border-sage/50"
+            ? "border-sage bg-sage/5 dark:bg-sage/10"
+            : "border-mist hover:border-sage/50 dark:border-cream/10 dark:hover:border-sage/40"
         }`}
       >
         <input
@@ -90,13 +90,13 @@ export default function UploadZone({ onFileLoaded }: UploadZoneProps) {
           className="hidden"
         />
 
-        <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-mist/40 p-3">
+        <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-mist/40 p-3 dark:bg-cream/10">
           <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth={1.5}
-            className="h-full w-full text-charcoal/40"
+            className="h-full w-full text-charcoal/40 dark:text-cream/40"
           >
             <path
               strokeLinecap="round"
@@ -110,10 +110,10 @@ export default function UploadZone({ onFileLoaded }: UploadZoneProps) {
           <p className="text-sm text-sage">{fileName}</p>
         ) : (
           <>
-            <p className="text-sm font-medium text-charcoal/60">
+            <p className="text-sm font-medium text-charcoal/60 dark:text-cream/60">
               Drop your Claude export here
             </p>
-            <p className="mt-1 text-xs text-charcoal/30">
+            <p className="mt-1 text-xs text-charcoal/30 dark:text-cream/30">
               JSON file from claude.ai → Settings → Export Data
             </p>
           </>
