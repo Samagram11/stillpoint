@@ -7,6 +7,8 @@ interface TimerProps {
   duration: number;
   /** Whether the timer is running */
   isRunning: boolean;
+  /** Called to start/stop the timer */
+  onToggle?: (running: boolean) => void;
   /** Called when timer completes */
   onComplete?: () => void;
   /** Compact display */
@@ -22,6 +24,7 @@ function formatTimer(totalSeconds: number): string {
 export default function Timer({
   duration,
   isRunning,
+  onToggle,
   onComplete,
   compact = false,
 }: TimerProps) {
@@ -60,12 +63,24 @@ export default function Timer({
 
   const remaining = Math.max(0, totalSeconds - elapsed);
   const progress = totalSeconds > 0 ? Math.min(elapsed / totalSeconds, 1) : 0;
+  const isComplete = elapsed >= totalSeconds;
+
+  function handleClick() {
+    if (isComplete) {
+      reset();
+      return;
+    }
+    onToggle?.(!isRunning);
+  }
 
   if (compact) {
     return (
-      <div className="flex items-center gap-2">
+      <button
+        onClick={handleClick}
+        className="flex items-center gap-2 rounded-full px-2 py-1 transition-colors hover:bg-sage/10"
+      >
         <span className="text-xs tabular-nums text-charcoal/40 dark:text-cream/40">
-          {formatTimer(remaining)}
+          {isComplete ? "Reset" : formatTimer(remaining)}
         </span>
         <div className="h-0.5 w-16 overflow-hidden rounded-full bg-mist dark:bg-cream/10">
           <div
@@ -73,13 +88,22 @@ export default function Timer({
             style={{ width: `${progress * 100}%` }}
           />
         </div>
-      </div>
+        {!isRunning && !isComplete && (
+          <span className="text-xs text-sage">▶</span>
+        )}
+        {isRunning && (
+          <span className="text-xs text-charcoal/30 dark:text-cream/30">⏸</span>
+        )}
+      </button>
     );
   }
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="relative flex h-16 w-16 items-center justify-center">
+      <button
+        onClick={handleClick}
+        className="relative flex h-16 w-16 items-center justify-center focus:outline-none"
+      >
         <svg className="h-16 w-16 -rotate-90" viewBox="0 0 64 64">
           <circle
             cx="32"
@@ -104,17 +128,12 @@ export default function Timer({
           />
         </svg>
         <span className="absolute text-sm tabular-nums font-light text-charcoal/60 dark:text-cream/60">
-          {formatTimer(remaining)}
+          {isComplete ? "Reset" : formatTimer(remaining)}
         </span>
-      </div>
-      {elapsed >= totalSeconds && (
-        <button
-          onClick={reset}
-          className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60 dark:text-cream/30 dark:hover:text-cream/60"
-        >
-          Reset
-        </button>
-      )}
+      </button>
+      <span className="text-xs text-charcoal/30 dark:text-cream/30">
+        {isComplete ? "Done" : isRunning ? "Tap to pause" : "Tap to start"}
+      </span>
     </div>
   );
 }

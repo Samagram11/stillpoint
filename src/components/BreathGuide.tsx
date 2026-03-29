@@ -2,19 +2,21 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-type BreathPhase = "idle" | "inhale" | "hold" | "exhale";
+type BreathPhase = "idle" | "inhale" | "hold1" | "exhale" | "hold2";
 
 const PHASE_DURATIONS: Record<Exclude<BreathPhase, "idle">, number> = {
   inhale: 4,
-  hold: 7,
-  exhale: 8,
+  hold1: 4,
+  exhale: 4,
+  hold2: 4,
 };
 
 const PHASE_LABELS: Record<BreathPhase, string> = {
   idle: "Begin",
   inhale: "Breathe in",
-  hold: "Hold",
-  exhale: "Release",
+  hold1: "Hold",
+  exhale: "Breathe out",
+  hold2: "Hold",
 };
 
 interface BreathGuideProps {
@@ -60,13 +62,16 @@ export default function BreathGuide({
         if (prev <= 1) {
           // Advance to next phase
           if (phase === "inhale") {
-            setPhase("hold");
-            return PHASE_DURATIONS.hold;
-          } else if (phase === "hold") {
+            setPhase("hold1");
+            return PHASE_DURATIONS.hold1;
+          } else if (phase === "hold1") {
             setPhase("exhale");
             return PHASE_DURATIONS.exhale;
+          } else if (phase === "exhale") {
+            setPhase("hold2");
+            return PHASE_DURATIONS.hold2;
           } else {
-            // exhale complete — new cycle
+            // hold2 complete — new cycle
             setPhase("inhale");
             setCycleCount((c) => c + 1);
             return PHASE_DURATIONS.inhale;
@@ -86,17 +91,22 @@ export default function BreathGuide({
       const progress = 1 - countdown / PHASE_DURATIONS.inhale;
       return 1 + progress * 0.4;
     }
-    if (phase === "hold") return 1.4;
-    // exhale
-    const progress = 1 - countdown / PHASE_DURATIONS.exhale;
-    return 1.4 - progress * 0.4;
+    if (phase === "hold1") return 1.4;
+    if (phase === "exhale") {
+      const progress = 1 - countdown / PHASE_DURATIONS.exhale;
+      return 1.4 - progress * 0.4;
+    }
+    // hold2
+    return 1;
   };
 
   const getOpacity = () => {
     if (phase === "idle") return 0.3;
     if (phase === "inhale") return 0.4 + (1 - countdown / PHASE_DURATIONS.inhale) * 0.4;
-    if (phase === "hold") return 0.8;
-    return 0.8 - (1 - countdown / PHASE_DURATIONS.exhale) * 0.4;
+    if (phase === "hold1") return 0.8;
+    if (phase === "exhale") return 0.8 - (1 - countdown / PHASE_DURATIONS.exhale) * 0.4;
+    // hold2
+    return 0.4;
   };
 
   const circleSize = compact ? "h-20 w-20" : "h-32 w-32";
@@ -120,14 +130,12 @@ export default function BreathGuide({
         <div className="absolute flex flex-col items-center">
           {phase === "idle" ? (
             <span className={`${textSize} text-charcoal/60 dark:text-cream/60`}>
-              4-7-8
+              Box
             </span>
           ) : (
-            <>
-              <span className={`${countdownSize} font-light text-charcoal/80 dark:text-cream/80`}>
-                {countdown}
-              </span>
-            </>
+            <span className={`${countdownSize} font-light text-charcoal/80 dark:text-cream/80`}>
+              {countdown}
+            </span>
           )}
         </div>
       </button>

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { MEDITATION_TYPES } from "@/lib/meditationTypes";
 import BreathGuide from "@/components/BreathGuide";
+import AudioPlayer from "@/components/AudioPlayer";
 import Timer from "@/components/Timer";
 import type { Meditation } from "@/lib/types";
 
@@ -295,6 +296,7 @@ export default function MeditationPlayer({
               duration={meditation.duration}
               isRunning={timerRunning}
               compact
+              onToggle={setTimerRunning}
               onComplete={() => {
                 bellRef.current?.play().catch(() => {});
                 setTimerRunning(false);
@@ -411,26 +413,25 @@ export default function MeditationPlayer({
               {SPEEDS[speedIndex]}x
             </button>
           </div>
-        ) : canGenerateAudio ? (
-          <div className="mx-auto max-w-lg space-y-2">
-            <button
-              onClick={generateAudio}
-              disabled={isGeneratingAudio}
-              className="w-full rounded-xl border border-mist bg-white/40 px-4 py-3 text-sm text-charcoal/60 transition-all hover:border-sage hover:text-charcoal disabled:opacity-50 dark:border-cream/10 dark:bg-cream/5 dark:text-cream/60 dark:hover:border-sage dark:hover:text-cream"
-            >
-              {isGeneratingAudio
-                ? "Generating audio..."
-                : "Generate with ElevenLabs voice"}
-            </button>
-            {audioError && (
-              <p className="text-center text-xs text-red-500/70">{audioError}</p>
-            )}
-          </div>
         ) : (
-          <div className="mx-auto max-w-lg text-center">
-            <p className="text-xs text-charcoal/30 dark:text-cream/30">
-              Read along at your own pace
-            </p>
+          <div className="mx-auto max-w-lg space-y-3">
+            {canGenerateAudio && (
+              <div className="space-y-2">
+                <button
+                  onClick={generateAudio}
+                  disabled={isGeneratingAudio}
+                  className="w-full rounded-xl border border-mist bg-white/40 px-4 py-3 text-sm text-charcoal/60 transition-all hover:border-sage hover:text-charcoal disabled:opacity-50 dark:border-cream/10 dark:bg-cream/5 dark:text-cream/60 dark:hover:border-sage dark:hover:text-cream"
+                >
+                  {isGeneratingAudio
+                    ? "Generating audio..."
+                    : "Generate with ElevenLabs voice"}
+                </button>
+                {audioError && (
+                  <p className="text-center text-xs text-red-500/70">{audioError}</p>
+                )}
+              </div>
+            )}
+            <AudioPlayer script={meditation.script} />
           </div>
         )}
       </div>
