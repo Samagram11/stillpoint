@@ -7,7 +7,9 @@ import ProcessingView from "@/components/ProcessingView";
 import MeditationCard from "@/components/MeditationCard";
 import MeditationPlayer from "@/components/MeditationPlayer";
 import VoiceSelector from "@/components/VoiceSelector";
-import DarkModeToggle from "@/components/DarkModeToggle";
+import ThemeSelector from "@/components/ThemeSelector";
+import AuraBackground from "@/components/AuraBackground";
+import { getStoredTheme, type Theme } from "@/components/ThemeSelector";
 import type { ApiKeyConfig, ProcessingState, Meditation, MeditationType } from "@/lib/types";
 // voices.ts kept for reference; VoiceSelector now fetches live from ElevenLabs API
 import { parseExport } from "@/lib/parseExport";
@@ -32,9 +34,21 @@ export default function Home() {
   const [serverHasKeys, setServerHasKeys] = useState(false);
   const [selectedVoiceId, setSelectedVoiceId] = useState("");
   const [hasElevenLabsKey, setHasElevenLabsKey] = useState(false);
+  const [theme, setTheme] = useState<Theme>("minimalist");
+
+  // Listen for theme changes
+  useEffect(() => {
+    function handleThemeChange(e: Event) {
+      setTheme((e as CustomEvent).detail as Theme);
+    }
+    window.addEventListener("theme-change", handleThemeChange);
+    return () => window.removeEventListener("theme-change", handleThemeChange);
+  }, []);
 
   // Restore state from localStorage on mount + check server config
   useEffect(() => {
+    setTheme(getStoredTheme());
+
     async function init() {
       // Check if server has API keys configured (personal deploy)
       try {
@@ -288,16 +302,18 @@ export default function Home() {
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center">
+      {theme === "aura" && <AuraBackground />}
+
       {/* Header — always visible except in player */}
       {step !== "reader" && (
         <div className="mb-12 text-center fade-in">
           <div className="flex justify-end mb-4">
-            <DarkModeToggle />
+            <ThemeSelector />
           </div>
-          <h1 className="font-display text-5xl font-light tracking-tight text-charcoal dark:text-cream">
+          <h1 className="font-display text-5xl font-light tracking-tight text-charcoal">
             stillpoint
           </h1>
-          <p className="mt-3 text-sm text-charcoal/50 dark:text-cream/50">
+          <p className="mt-3 text-sm text-charcoal/50">
             Your conversations, transformed into meditations.
           </p>
         </div>
@@ -319,14 +335,14 @@ export default function Home() {
               {!serverHasKeys && (
                 <button
                   onClick={() => setStep("keys")}
-                  className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60 dark:text-cream/30 dark:hover:text-cream/60"
+                  className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60"
                 >
                   Change API keys
                 </button>
               )}
               <button
                 onClick={handleClearData}
-                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 ml-auto dark:text-cream/30"
+                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 ml-auto"
               >
                 Clear all data
               </button>
@@ -357,13 +373,13 @@ export default function Home() {
             <div className="flex items-center justify-between pt-4">
               <button
                 onClick={() => setStep("upload")}
-                className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60 dark:text-cream/30 dark:hover:text-cream/60"
+                className="text-xs text-charcoal/30 transition-colors hover:text-charcoal/60"
               >
                 Upload new conversations
               </button>
               <button
                 onClick={handleClearData}
-                className="text-xs text-charcoal/30 transition-colors hover:text-red-400 dark:text-cream/30"
+                className="text-xs text-charcoal/30 transition-colors hover:text-red-400"
               >
                 Clear all data
               </button>

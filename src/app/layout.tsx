@@ -22,13 +22,12 @@ export const metadata: Metadata = {
     "Transform AI conversation history into personalized guided meditations.",
 };
 
-// Inline script to prevent flash of wrong theme
+// Inline script to apply saved theme before React hydrates (prevents flash)
 const themeScript = `
 (function() {
   try {
-    var theme = localStorage.getItem('stillpoint-theme');
-    var isDark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches) || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    if (isDark) document.documentElement.classList.add('dark');
+    var theme = localStorage.getItem('stillpoint-theme') || 'minimalist';
+    document.documentElement.classList.add('theme-' + theme);
   } catch(e) {}
 })();
 `;
@@ -43,7 +42,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen bg-cream text-charcoal antialiased transition-colors dark:bg-deep dark:text-cream">
+      <body className="min-h-screen bg-cream text-charcoal antialiased">
         <main className="mx-auto max-w-3xl px-6 py-12">{children}</main>
       </body>
     </html>

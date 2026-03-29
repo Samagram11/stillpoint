@@ -79,10 +79,10 @@ export default function Timer({
         onClick={handleClick}
         className="flex items-center gap-2 rounded-full px-2 py-1 transition-colors hover:bg-sage/10"
       >
-        <span className="text-xs tabular-nums text-charcoal/40 dark:text-cream/40">
+        <span className="text-xs tabular-nums text-charcoal/40">
           {isComplete ? "Reset" : formatTimer(remaining)}
         </span>
-        <div className="h-0.5 w-16 overflow-hidden rounded-full bg-mist dark:bg-cream/10">
+        <div className="h-0.5 w-16 overflow-hidden rounded-full bg-mist">
           <div
             className="h-full rounded-full bg-sage transition-all duration-1000"
             style={{ width: `${progress * 100}%` }}
@@ -92,7 +92,7 @@ export default function Timer({
           <span className="text-xs text-sage">▶</span>
         )}
         {isRunning && (
-          <span className="text-xs text-charcoal/30 dark:text-cream/30">⏸</span>
+          <span className="text-xs text-charcoal/30">⏸</span>
         )}
       </button>
     );
@@ -112,7 +112,7 @@ export default function Timer({
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
-            className="text-mist dark:text-cream/10"
+            className="text-mist"
           />
           <circle
             cx="32"
@@ -127,11 +127,11 @@ export default function Timer({
             className="text-sage transition-all duration-1000"
           />
         </svg>
-        <span className="absolute text-sm tabular-nums font-light text-charcoal/60 dark:text-cream/60">
+        <span className="absolute text-sm tabular-nums font-light text-charcoal/60">
           {isComplete ? "Reset" : formatTimer(remaining)}
         </span>
       </button>
-      <span className="text-xs text-charcoal/30 dark:text-cream/30">
+      <span className="text-xs text-charcoal/30">
         {isComplete ? "Done" : isRunning ? "Tap to pause" : "Tap to start"}
       </span>
     </div>

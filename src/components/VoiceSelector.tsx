@@ -59,7 +59,7 @@ export default function VoiceSelector({
   }, [loaded, voices.length, selectedVoiceId, onSelect]);
 
   if (!loaded) {
-    return <div className="text-xs text-charcoal/30 dark:text-cream/30">Loading voices...</div>;
+    return <div className="text-xs text-charcoal/30">Loading voices...</div>;
   }
 
   const isCustomSelected =
@@ -67,7 +67,7 @@ export default function VoiceSelector({
 
   return (
     <div className="fade-in space-y-3">
-      <label className="block text-xs font-medium text-charcoal/50 dark:text-cream/50">
+      <label className="block text-xs font-medium text-charcoal/50">
         Voice
       </label>
 
@@ -78,8 +78,8 @@ export default function VoiceSelector({
             onClick={() => onSelect(voice.id)}
             className={`rounded-full border px-3 py-1.5 text-xs transition-all ${
               selectedVoiceId === voice.id
-                ? "border-sage bg-sage/10 text-sage dark:bg-sage/20"
-                : "border-mist text-charcoal/40 hover:border-sage/40 hover:text-charcoal/60 dark:border-cream/10 dark:text-cream/40 dark:hover:text-cream/60"
+                ? "border-sage bg-sage/10 text-sage"
+                : "border-mist text-charcoal/40 hover:border-sage/40 hover:text-charcoal/60"
             }`}
             title={voice.description}
           >
@@ -98,8 +98,8 @@ export default function VoiceSelector({
           onClick={() => setShowCustom(!showCustom)}
           className={`rounded-full border px-3 py-1.5 text-xs transition-all ${
             isCustomSelected && customId
-              ? "border-sage bg-sage/10 text-sage dark:bg-sage/20"
-              : "border-mist text-charcoal/40 hover:border-sage/40 hover:text-charcoal/60 dark:border-cream/10 dark:text-cream/40 dark:hover:text-cream/60"
+              ? "border-sage bg-sage/10 text-sage"
+              : "border-mist text-charcoal/40 hover:border-sage/40 hover:text-charcoal/60"
           }`}
         >
           Custom ID
@@ -113,14 +113,14 @@ export default function VoiceSelector({
             value={customId}
             onChange={(e) => setCustomId(e.target.value)}
             placeholder="ElevenLabs Voice ID"
-            className="flex-1 rounded-lg border border-mist bg-white/50 px-3 py-2 text-xs transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none dark:border-cream/10 dark:bg-cream/5 dark:text-cream dark:placeholder:text-cream/30"
+            className="flex-1 rounded-lg border border-mist bg-white/50 px-3 py-2 text-xs transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none"
           />
           <button
             onClick={() => {
               if (customId.trim()) onSelect(customId.trim());
             }}
             disabled={!customId.trim()}
-            className="rounded-lg bg-charcoal px-3 py-2 text-xs text-cream transition-all hover:bg-deep disabled:opacity-30 dark:bg-cream dark:text-deep dark:hover:bg-cream/80"
+            className="rounded-lg bg-charcoal px-3 py-2 text-xs text-cream transition-all hover:bg-deep disabled:opacity-30"
           >
             Use
           </button>
