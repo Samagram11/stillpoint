@@ -14,15 +14,15 @@ npm run build   # verify before committing
 
 Stillpoint does NOT recite your problems back to you. It identifies what capacities you need — then builds meditations that develop those capacities using universal language. Two-layer model:
 
-1. **Capacity Extraction** — Read conversations, identify what the person needs to *practice*. Prompt in `.claude/skills/theme-extractor/SKILL.md`.
-2. **Meditation Generation** — Build those capacities using universal language. NEVER mention specific life details. 6 meditation types defined in `src/lib/meditationTypes.ts`. Prompt in `.claude/skills/meditation-writer/SKILL.md`.
+1. **Capacity Extraction** — Read conversations, identify what the person needs to *practice*. LLM produces textured capacity names + meditation seeds + recommended approaches. Prompt in `.claude/skills/theme-extractor/SKILL.md`.
+2. **Meditation Generation** — Build those capacities using universal language. NEVER mention specific life details. 5 structural approaches (grounding, somatic, visualization, compassion, spacious) defined in `src/lib/meditationTypes.ts`. Prompt in `.claude/skills/meditation-writer/SKILL.md`.
 
 ## Data Flow
 
 ```
 Upload JSON → parseExport.ts (client, strips to human msgs only)
-  → /api/extract-themes (server, Claude API)
-  → assignMeditationTypes (client, keyword scoring)
+  → /api/extract-themes (server, Claude API, returns capacities with approaches)
+  → selectCapacities (client, top 5 by intensity)
   → /api/generate-meditation (server, Claude API, sequential)
   → Gallery → Player
 ```
@@ -97,7 +97,7 @@ Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`.
 - [x] ProcessingView with animated states
 
 ### Phase 3: Meditation Generation
-- [x] meditationTypes.ts — 6 type templates
+- [x] meditationTypes.ts — 5 structural approaches (grounding, somatic, visualization, compassion, spacious)
 - [x] /api/generate-meditation route (uses meditation-writer skill prompt)
 - [x] MeditationCard gallery
 - [x] localStorage caching
