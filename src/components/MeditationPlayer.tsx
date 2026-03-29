@@ -210,7 +210,7 @@ export default function MeditationPlayer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col bg-cream transition-colors aura:bg-[#F8F4FF]"
+      className="fixed inset-0 z-50 flex flex-col bg-cream transition-colors"
       onMouseMove={handleInteraction}
       onTouchStart={handleInteraction}
     >

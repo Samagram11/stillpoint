@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@variant aura (&:where(.theme-aura, .theme-aura *));
-
 @theme {
   --color-cream: #F5F0EB;
   --color-charcoal: #2C2C2C;
@@ -12,37 +10,21 @@
 }
 
 @layer base {
-  :root {
-    --cream: #F5F0EB;
-    --charcoal: #2C2C2C;
-    --sage: #8B9D83;
-    --clay: #C4A882;
-    --mist: #D4D0CB;
-    --deep: #1A1A1A;
-  }
-
   body {
     font-family: 'DM Sans', sans-serif;
-    background-color: var(--cream);
-    color: var(--charcoal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
 
-  /* ─── Aura Theme ─── */
-  .theme-aura body {
-    background-color: #F8F4FF;
-    color: #2D2640;
-  }
-
+  /* ─── Aura Theme: override Tailwind color variables ─── */
   .theme-aura {
-    --cream: #F8F4FF;
-    --charcoal: #2D2640;
-    --sage: #9B8EC4;
-    --clay: #D4A0C0;
-    --mist: #E8E0F0;
-    --deep: #1C1528;
+    --color-cream: #F8F4FF;
+    --color-charcoal: #2D2640;
+    --color-sage: #9B8EC4;
+    --color-clay: #D4A0C0;
+    --color-mist: #E8E0F0;
+    --color-deep: #1C1528;
   }
 }
 
@@ -123,18 +105,10 @@
   }
 
   @keyframes auraFloat {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-    }
-    25% {
-      transform: translate(30px, -20px) scale(1.05);
-    }
-    50% {
-      transform: translate(-20px, 20px) scale(0.95);
-    }
-    75% {
-      transform: translate(10px, 10px) scale(1.02);
-    }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -20px) scale(1.05); }
+    50% { transform: translate(-20px, 20px) scale(0.95); }
+    75% { transform: translate(10px, 10px) scale(1.02); }
   }
 
   /* Aura breathing orb */
@@ -153,50 +127,45 @@
     }
   }
 
-  .aura-breathing-circle {
-    background: linear-gradient(135deg, #C4B5FD, #F9A8D4, #A5F3FC);
+  /* Applied via .theme-aura scoping below */
+  .theme-aura .breathing-circle {
+    background: linear-gradient(135deg, #C4B5FD, #F9A8D4, #A5F3FC) !important;
     animation: auraBreathe 8s ease-in-out infinite;
   }
 
   /* Aura glass card */
-  .aura-glass {
+  .theme-aura .aura-glass {
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
-  .aura-glass:hover {
+  .theme-aura .aura-glass:hover {
     background: rgba(255, 255, 255, 0.55);
     border-color: rgba(167, 139, 250, 0.3);
   }
 
   /* Aura input */
-  .aura-input {
+  .theme-aura .aura-input {
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-color: rgba(167, 139, 250, 0.2);
   }
 
-  .aura-input:focus {
+  .theme-aura .aura-input:focus {
     border-color: rgba(167, 139, 250, 0.5);
     box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
   }
 
   /* Aura button */
-  .aura-btn {
+  .theme-aura .aura-btn {
     background: linear-gradient(135deg, #7C3AED, #A78BFA);
     color: white;
   }
 
-  .aura-btn:hover {
+  .theme-aura .aura-btn:hover {
     background: linear-gradient(135deg, #6D28D9, #8B5CF6);
-  }
-
-  /* Aura badge */
-  .aura-badge {
-    background: rgba(167, 139, 250, 0.15);
-    color: #7C3AED;
   }
 }

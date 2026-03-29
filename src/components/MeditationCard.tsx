@@ -17,7 +17,7 @@ export default function MeditationCard({
   return (
     <button
       onClick={() => onSelect(meditation)}
-      className="fade-in group w-full rounded-xl border border-mist bg-white/40 p-6 text-left transition-all hover:border-sage/50 hover:bg-white/60 aura:aura-glass"
+      className="fade-in group w-full rounded-xl border border-mist bg-white/40 p-6 text-left transition-all hover:border-sage/50 hover:bg-white/60 aura-glass"
     >
       <div className="mb-3 flex items-start justify-between">
         <h3 className="font-display text-2xl font-light text-charcoal">

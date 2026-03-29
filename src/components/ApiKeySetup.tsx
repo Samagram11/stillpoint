@@ -49,7 +49,7 @@ export default function ApiKeySetup({
           value={anthropicKey}
           onChange={(e) => setAnthropicKey(e.target.value)}
           placeholder="sk-ant-..."
-          className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none aura:aura-input"
+          className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none aura-input"
           required
         />
         <p className="mt-1.5 text-xs text-charcoal/40">
@@ -80,7 +80,7 @@ export default function ApiKeySetup({
             value={elevenLabsKey}
             onChange={(e) => setElevenLabsKey(e.target.value)}
             placeholder="xi-..."
-            className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none aura:aura-input"
+            className="w-full rounded-lg border border-mist bg-white/50 px-4 py-3 text-sm transition-colors placeholder:text-charcoal/30 focus:border-sage focus:outline-none aura-input"
           />
           <p className="mt-1.5 text-xs text-charcoal/40">
             For audio playback. Without this, meditations are text-only.
@@ -99,7 +99,7 @@ export default function ApiKeySetup({
       <button
         type="submit"
         disabled={!anthropicKey.trim()}
-        className="w-full rounded-lg bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-all hover:bg-deep disabled:cursor-not-allowed disabled:opacity-30 aura:aura-btn"
+        className="w-full rounded-lg bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-all hover:bg-deep disabled:cursor-not-allowed disabled:opacity-30 aura-btn"
       >
         Continue
       </button>

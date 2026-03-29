@@ -46,8 +46,8 @@ export default function ProcessingView({ state, onRetry }: ProcessingViewProps) 
           state.stage === "error"
             ? "bg-red-200/40"
             : state.stage === "complete"
-              ? "bg-sage/30 aura:aura-breathing-circle"
-              : "bg-sage/20 breathing-circle aura:aura-breathing-circle"
+              ? "bg-sage/30"
+              : "bg-sage/20 breathing-circle"
         }`}
       />
 
