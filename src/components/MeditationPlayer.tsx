@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MEDITATION_TYPES } from "@/lib/meditationTypes";
+import { MEDITATION_APPROACHES, LEGACY_MEDITATION_TYPES } from "@/lib/meditationTypes";
+import type { LegacyMeditationType } from "@/lib/types";
 import BreathGuide from "@/components/BreathGuide";
 import AudioPlayer from "@/components/AudioPlayer";
 import Timer from "@/components/Timer";
@@ -66,7 +67,11 @@ export default function MeditationPlayer({
   onBack,
   onMeditationUpdate,
 }: MeditationPlayerProps) {
-  const typeInfo = MEDITATION_TYPES[meditation.type];
+  const displayInfo = meditation.approach
+    ? MEDITATION_APPROACHES[meditation.approach]
+    : meditation.type
+      ? LEGACY_MEDITATION_TYPES[meditation.type as LegacyMeditationType] ?? { name: "Meditation" }
+      : { name: "Meditation" };
 
   // Audio state
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -268,7 +273,7 @@ export default function MeditationPlayer({
         {/* Header */}
         <div className="mb-6 text-center">
           <span className="mb-2 inline-block rounded-full bg-sage/10 px-2.5 py-0.5 text-xs text-sage">
-            {typeInfo.name}
+            {displayInfo.name}
           </span>
           <h2 className="font-display text-3xl font-light text-charcoal sm:text-4xl">
             {meditation.title}

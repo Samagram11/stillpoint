@@ -1,66 +1,82 @@
-import type { MeditationType } from "./types";
+import type { MeditationApproach, LegacyMeditationType } from "./types";
 
-interface MeditationTypeInfo {
-  type: MeditationType;
+interface MeditationApproachInfo {
+  approach: MeditationApproach;
   name: string;
   tagline: string;
   description: string;
-  approach: string;
+  technique: string;
 }
 
-export const MEDITATION_TYPES: Record<MeditationType, MeditationTypeInfo> = {
-  anchor: {
-    type: "anchor",
-    name: "The Anchor",
-    tagline: "Stability amidst chaos",
+export const MEDITATION_APPROACHES: Record<MeditationApproach, MeditationApproachInfo> = {
+  grounding: {
+    approach: "grounding",
+    name: "Grounding",
+    tagline: "Present-moment anchoring",
     description:
-      "Sensory grounding, breath stabilization, and finding the still point within.",
-    approach:
-      "Sensory grounding → breath stabilization → finding the still point.",
+      "Uses sensory awareness and breath to establish present-moment stability.",
+    technique:
+      "Noticing physical contact points, sounds, breath rhythm. Anchoring attention in what is real and here.",
   },
-  release: {
-    type: "release",
-    name: "The Release",
-    tagline: "Surrendering control",
+  somatic: {
+    approach: "somatic",
+    name: "Somatic",
+    tagline: "Body awareness",
     description:
-      "Noticing what you're gripping, feeling the cost of holding, and practicing letting go.",
-    approach:
-      "Noticing what you're gripping → cost of holding → practicing release → discovering what remains.",
+      "Moves attention through the body. Emphasizes sensation over narrative.",
+    technique:
+      "Progressive body scan, focused attention on specific areas, noticing tension and ease without judgment.",
   },
-  bridge: {
-    type: "bridge",
-    name: "The Bridge",
-    tagline: "Tolerating transition",
+  visualization: {
+    approach: "visualization",
+    name: "Visualization",
+    tagline: "Guided imagery",
     description:
-      "Honoring what was, sitting with not-knowing, and sensing what's forming.",
-    approach:
-      "Honoring what was → sitting with not-knowing → sensing what's forming.",
+      "Uses guided imagery and metaphor. The imagery emerges from the capacity being built.",
+    technique:
+      "Creating inner landscapes, working with metaphor, transforming felt experience through imagination.",
   },
-  body: {
-    type: "body",
-    name: "The Body",
-    tagline: "Patience with healing",
+  compassion: {
+    approach: "compassion",
+    name: "Compassion",
+    tagline: "Directed warmth",
     description:
-      "Gentle body awareness, gratitude for function, and trusting the timeline.",
-    approach:
-      "Gentle body awareness → gratitude for function → honoring limits → trusting the timeline.",
+      "Directs warmth and kindness inward. Tender, not performative.",
+    technique:
+      "Self-directed kindness, warmth toward difficulty, softening around hard edges.",
   },
-  thread: {
-    type: "thread",
-    name: "The Thread",
-    tagline: "Connection across distance",
+  spacious: {
+    approach: "spacious",
+    name: "Spacious Awareness",
+    tagline: "Making room",
     description:
-      "Feeling connection as energy, sending intention, and trusting the thread.",
-    approach:
-      "Feeling connection as energy → sending intention → trusting the thread.",
+      "Creates room for what is, without trying to change it. Emphasizes non-doing and acceptance.",
+    technique:
+      "Open awareness, widening attention, letting thoughts and feelings exist without engagement or resistance.",
   },
-  ground: {
-    type: "ground",
-    name: "The Ground",
-    tagline: "Self-trust",
-    description:
-      "Settling into your body, remembering capability, and carrying it as fact.",
-    approach:
-      "Settling into your body → remembering a time you surprised yourself → carrying it as fact.",
-  },
+};
+
+/** Map legacy meditation types to the nearest approach for backward compat */
+export const LEGACY_TO_APPROACH: Record<LegacyMeditationType, MeditationApproach> = {
+  anchor: "grounding",
+  release: "visualization",
+  bridge: "spacious",
+  body: "somatic",
+  thread: "compassion",
+  ground: "grounding",
+};
+
+interface LegacyTypeInfo {
+  name: string;
+  tagline: string;
+}
+
+/** Legacy type display info — only used for rendering old cached meditations */
+export const LEGACY_MEDITATION_TYPES: Record<LegacyMeditationType, LegacyTypeInfo> = {
+  anchor: { name: "The Anchor", tagline: "Stability amidst chaos" },
+  release: { name: "The Release", tagline: "Surrendering control" },
+  bridge: { name: "The Bridge", tagline: "Tolerating transition" },
+  body: { name: "The Body", tagline: "Patience with healing" },
+  thread: { name: "The Thread", tagline: "Connection across distance" },
+  ground: { name: "The Ground", tagline: "Self-trust" },
 };

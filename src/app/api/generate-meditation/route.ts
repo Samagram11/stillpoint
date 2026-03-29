@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MEDITATION_TYPES } from "@/lib/meditationTypes";
-import type { MeditationType } from "@/lib/types";
+import { MEDITATION_APPROACHES } from "@/lib/meditationTypes";
+import type { MeditationApproach } from "@/lib/types";
 
 const SYSTEM_PROMPT = `You are a meditation guide. You write 5-minute guided meditations that build specific psychological and emotional capacities.
 
@@ -10,7 +10,11 @@ CRITICAL RULES:
 - NEVER use the word "journey"
 - NEVER use cliches: "in this moment," "simply notice," "allow yourself"
 - Use universal language that resonates because of WHAT it addresses, not HOW specifically it describes someone's life
-- The personalization is in the SELECTION of the right capacity — the meditation itself should feel like it could be in a beautifully printed book
+
+PERSONALIZATION:
+The meditation should feel personal without being specific. Someone who just finished this meditation should feel like the guide understood exactly what they're going through — even though no details of their life were mentioned. The specificity comes from the emotional precision of the language, not from naming situations.
+
+Let the capacity name and meditation seed guide the imagery and emotional arc. The meditation should feel like it was written for someone who needs exactly this — not a generic script with a label changed.
 
 Write ~700 words at a slow, gentle pace.
 
@@ -28,8 +32,14 @@ Structure:
 
 Tone: Warm, grounded, unhurried. Like a trusted friend who is also very wise. Not clinical. Not spiritual-performative. Not saccharine. Not overly poetic. Grounded and real.
 
+CREATIVE FREEDOM:
+- Choose a breath pattern that serves this specific capacity and approach
+- Let imagery emerge from the capacity, not from a template
+- Two meditations on the same capacity should feel different
+- Do not default to formulaic patterns
+
 IMPORTANT: Also generate a title and one-sentence description.
-- Title: 2-4 words, poetic but not precious. Examples: "Empty Hands," "The Thread Holds," "Solid Ground"
+- Title: 2-4 words, poetic but not precious. Examples: "Empty Hands," "Still Moving," "Solid Ground"
 - Description: One sentence, ~10-15 words. States the capacity, not the technique.
 
 Return your response as JSON:
@@ -41,11 +51,10 @@ Return your response as JSON:
 
 interface GenerationRequest {
   apiKey: string;
-  meditationType: MeditationType;
-  capacities: Array<{
-    capacity: string;
-    description: string;
-  }>;
+  approach: MeditationApproach;
+  capacity: string;
+  capacityDescription: string;
+  meditationSeed: string;
   emotionalTone: string;
   bodyContext?: string;
   strengthSignals?: string;
@@ -58,37 +67,37 @@ export async function POST(request: NextRequest) {
     // Env var takes precedence (personal deploy), then BYOK from request
     const apiKey = process.env.ANTHROPIC_API_KEY || body.apiKey;
 
-    if (!apiKey || !body.meditationType) {
+    if (!apiKey || !body.approach) {
       return NextResponse.json(
-        { error: "Missing required fields: apiKey and meditationType" },
+        { error: "Missing required fields: apiKey and approach" },
         { status: 400 }
       );
     }
 
-    const typeInfo = MEDITATION_TYPES[body.meditationType];
-    if (!typeInfo) {
+    const approachInfo = MEDITATION_APPROACHES[body.approach];
+    if (!approachInfo) {
       return NextResponse.json(
-        { error: "Invalid meditation type" },
+        { error: "Invalid meditation approach" },
         { status: 400 }
       );
     }
 
-    const capacityContext = body.capacities?.length
-      ? `Capacities to address:\n${body.capacities.map((c) => `- ${c.capacity}: ${c.description}`).join("\n")}`
-      : "No specific capacities provided. Generate based on the type's general purpose.";
+    const userPrompt = `Generate a meditation using the "${approachInfo.name}" approach.
 
-    const userPrompt = `Generate a "${typeInfo.name}" meditation.
+Approach: ${approachInfo.description}
+Technique: ${approachInfo.technique}
 
-Type purpose: ${typeInfo.tagline}
-Type approach: ${typeInfo.approach}
+Capacity to build: ${body.capacity}
+${body.capacityDescription ? `What this means: ${body.capacityDescription}` : ""}
 
-${capacityContext}
+Meditation seed (let this guide your imagery and tone):
+"${body.meditationSeed}"
 
 Emotional tone of this person: ${body.emotionalTone || "Not specified"}
 ${body.bodyContext ? `Body context: ${body.bodyContext}` : ""}
 ${body.strengthSignals ? `Strengths already present: ${body.strengthSignals}` : ""}
 
-Remember: universal language only. No specific life details. The script should feel like it belongs in a printed book.`;
+Remember: universal language only. No specific life details. But make it feel deeply personal — like it was written for someone who needs exactly this capacity right now.`;
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -156,7 +165,7 @@ Remember: universal language only. No specific life details. The script should f
       title: meditation.title,
       description: meditation.description ?? "",
       script: meditation.script,
-      type: body.meditationType,
+      approach: body.approach,
     });
   } catch (error) {
     if (error instanceof SyntaxError) {

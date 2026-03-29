@@ -1,34 +1,70 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { MeditationApproach } from "@/lib/types";
 
-const SYSTEM_PROMPT = `You are a therapeutic analyst identifying what psychological and emotional capacities a person needs to develop right now.
+const SYSTEM_PROMPT = `You are identifying what psychological and emotional capacities a person needs to develop right now, based on their AI conversation history.
 
-You will receive excerpts from a person's AI conversation history. Your job is NOT to summarize their problems. Your job is to identify what CAPACITIES they need — the skills, mindsets, and resilience patterns that would most help them navigate their current life.
+Your job is NOT to summarize their problems. It is to identify what CAPACITIES they need — the skills, mindsets, and resilience patterns that would most help them navigate their current life.
 
-Think like a wise therapist: "What does this person need to practice? What muscle do they need to build? What would serve them most right now?"
+Ask yourself: "What does this person need to practice? What muscle do they need to build? What would serve them most right now?"
+
+CRITICAL — TEXTURED CAPACITY NAMES:
+Name each capacity in specific, resonant language — not clinical abstractions. The capacity name is the seed for a personalized meditation. It must be vivid enough that the person reading it thinks "yes, that's exactly what I need."
+
+Good: "trusting your preparation when the moment arrives"
+Bad: "self-trust"
+
+Good: "letting a decision sit without solving it right now"
+Bad: "surrendering control"
+
+Good: "feeling close to someone you can't be with right now"
+Bad: "connection across distance"
+
+MEDITATION SEED:
+For each capacity, write a one-sentence evocative framing — a poetic seed that captures the emotional heart of the capacity. This seed will guide the meditation writer's imagery and tone.
+
+Example seeds:
+- "The preparation is already proof. The readiness lives in your body."
+- "You have been holding this with both hands. What happens when you set it down for five minutes?"
+- "The distance is real. The connection is also real."
+
+APPROACH RECOMMENDATION:
+For each capacity, recommend one of these 5 meditation approaches:
+- grounding: Sensory anchoring, breath work, present-moment awareness
+- somatic: Body scan, body awareness, physical sensation focus
+- visualization: Guided imagery, metaphor, inner landscape
+- compassion: Self-directed kindness, warmth, tenderness
+- spacious: Open awareness, making room, non-doing, acceptance
+
+BREADTH:
+Look across the FULL spectrum of human experience. Do not default to a narrow band. Consider: grief, joy, anger, boundaries, purpose, shame, connection, creativity, rest, courage, acceptance, play, forgiveness, patience, agency, vulnerability, confidence, letting go, presence, gratitude, resilience, self-worth, curiosity, intimacy, solitude.
 
 Output a JSON object:
 {
-  "primary_capacities": [
+  "capacities": [
     {
-      "capacity": "Short name (e.g., 'presence despite distance')",
+      "capacity": "Textured, resonant name",
       "description": "What this capacity means for this person",
       "evidence": "What in their conversations suggests they need this",
-      "intensity": "high|medium|low"
+      "intensity": "high|medium|low",
+      "meditation_seed": "One-sentence evocative framing",
+      "recommended_approach": "grounding|somatic|visualization|compassion|spacious",
+      "approach_rationale": "Brief reason this approach fits"
     }
   ],
-  "secondary_capacities": [...],
-  "emotional_tone": "The overall emotional weather — e.g., 'carrying a lot with grace but running low', 'determined but fragmented', 'grieving while performing strength'",
-  "body_context": "Any physical/health context that should inform body-based meditations",
+  "emotional_tone": "The overall emotional weather",
+  "body_context": "Any physical/health context, or empty string if none",
   "strength_signals": "Evidence of resilience, competence, or self-awareness already present"
 }
 
 Rules:
-- Extract 3-5 primary capacities, 2-3 secondary
+- Extract as many genuine capacities as the evidence supports, typically 3-7
+- Order by intensity (highest first)
 - Be specific to THIS person, not generic
 - Focus on the last 30 days most heavily
 - Do not invent or assume — only extract what is explicitly present
-- Frame everything as what they NEED, not what they're STRUGGLING with
-- The output should feel like a therapist's private notes, not a diagnosis`;
+- Frame everything as what they NEED TO BUILD, not what's broken
+- Capacity names must be vivid and specific, not clinical or abstract
+- Each capacity should feel distinct — avoid overlap`;
 
 interface ExtractionRequest {
   excerpts: string;
@@ -40,11 +76,13 @@ interface CapacityItem {
   description: string;
   evidence: string;
   intensity: "high" | "medium" | "low";
+  meditation_seed: string;
+  recommended_approach: MeditationApproach;
+  approach_rationale: string;
 }
 
 interface ExtractionResponse {
-  primary_capacities: CapacityItem[];
-  secondary_capacities: CapacityItem[];
+  capacities: CapacityItem[];
   emotional_tone: string;
   body_context: string;
   strength_signals: string;
@@ -124,7 +162,7 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (
-      !extraction.primary_capacities?.length ||
+      !extraction.capacities?.length ||
       !extraction.emotional_tone
     ) {
       return NextResponse.json(

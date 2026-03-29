@@ -10,12 +10,12 @@ import VoiceSelector from "@/components/VoiceSelector";
 import ThemeSelector from "@/components/ThemeSelector";
 import AuraBackground from "@/components/AuraBackground";
 import { getStoredTheme, type Theme } from "@/components/ThemeSelector";
-import type { ApiKeyConfig, ProcessingState, Meditation, MeditationType } from "@/lib/types";
+import type { ApiKeyConfig, ProcessingState, Meditation, MeditationApproach } from "@/lib/types";
 // voices.ts kept for reference; VoiceSelector now fetches live from ElevenLabs API
 import { parseExport } from "@/lib/parseExport";
 import { formatExcerptsForExtraction } from "@/lib/extractCapacities";
 import {
-  assignMeditationTypes,
+  selectCapacities,
   type ExtractionResult,
 } from "@/lib/generateMeditation";
 
@@ -124,22 +124,21 @@ export default function Home() {
         message: "Writing your meditations...",
       });
 
-      const assignments = assignMeditationTypes(extraction);
+      const capacities = selectCapacities(extraction, 5);
       const generated: Meditation[] = [];
 
       // Generate meditations sequentially to avoid rate limits
-      for (const assignment of assignments) {
+      for (const cap of capacities) {
         try {
           const response = await fetch("/api/generate-meditation", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               apiKey: keys.anthropicKey,
-              meditationType: assignment.type,
-              capacities: assignment.capacities.map((c) => ({
-                capacity: c.capacity,
-                description: c.description,
-              })),
+              approach: cap.recommended_approach,
+              capacity: cap.capacity,
+              capacityDescription: cap.description,
+              meditationSeed: cap.meditation_seed,
               emotionalTone: extraction.emotional_tone,
               bodyContext: extraction.body_context,
               strengthSignals: extraction.strength_signals,
@@ -148,7 +147,6 @@ export default function Home() {
 
           if (!response.ok) {
             const err = await response.json();
-            // Skip this one but continue with others
             if (err.error?.includes("Invalid Anthropic API key")) {
               setProcessing({ stage: "error", message: err.error });
               return;
@@ -159,22 +157,20 @@ export default function Home() {
           const result = await response.json();
 
           generated.push({
-            id: `${assignment.type}-${Date.now()}`,
+            id: `${cap.recommended_approach}-${Date.now()}`,
             title: result.title,
-            type: assignment.type as MeditationType,
+            approach: cap.recommended_approach as MeditationApproach,
             capacity: result.description,
             script: result.script,
             duration: 5,
             createdAt: new Date().toISOString(),
           });
 
-          // Update progress message
           setProcessing({
             stage: "generating",
-            message: `Writing your meditations... (${generated.length}/${assignments.length})`,
+            message: `Writing your meditations... (${generated.length}/${capacities.length})`,
           });
         } catch {
-          // Skip failed generation, continue with others
           continue;
         }
       }

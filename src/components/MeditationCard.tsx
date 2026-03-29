@@ -1,18 +1,29 @@
 "use client";
 
-import { MEDITATION_TYPES } from "@/lib/meditationTypes";
-import type { Meditation } from "@/lib/types";
+import { MEDITATION_APPROACHES, LEGACY_MEDITATION_TYPES } from "@/lib/meditationTypes";
+import type { Meditation, LegacyMeditationType } from "@/lib/types";
 
 interface MeditationCardProps {
   meditation: Meditation;
   onSelect: (meditation: Meditation) => void;
 }
 
+function getDisplayInfo(meditation: Meditation): { name: string } {
+  if (meditation.approach) {
+    return MEDITATION_APPROACHES[meditation.approach];
+  }
+  // Legacy cached data fallback
+  if (meditation.type) {
+    return LEGACY_MEDITATION_TYPES[meditation.type as LegacyMeditationType] ?? { name: "Meditation" };
+  }
+  return { name: "Meditation" };
+}
+
 export default function MeditationCard({
   meditation,
   onSelect,
 }: MeditationCardProps) {
-  const typeInfo = MEDITATION_TYPES[meditation.type];
+  const displayInfo = getDisplayInfo(meditation);
 
   return (
     <button
@@ -24,7 +35,7 @@ export default function MeditationCard({
           {meditation.title}
         </h3>
         <span className="ml-3 shrink-0 rounded-full bg-sage/10 px-2.5 py-0.5 text-xs text-sage">
-          {typeInfo.name}
+          {displayInfo.name}
         </span>
       </div>
 
