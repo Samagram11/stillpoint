@@ -9,46 +9,46 @@
   --color-emphasis: #1A1A1A;
 }
 
+/* ─── Theme color overrides ───
+   Must be unlayered so Tailwind v4 doesn't purge them.
+   These override the @theme defaults when the class is on <html>. */
+
+.theme-cosmic {
+  --color-surface: #1A0A2E;
+  --color-ink: #F5E6FF;
+  --color-accent: #FF69B4;
+  --color-warm: #C77DFF;
+  --color-edge: #3D1A6E;
+  --color-emphasis: #FFB6E1;
+  --dark-card-bg: rgba(15, 5, 35, 0.85);
+  --dark-card-hover: rgba(20, 10, 45, 0.9);
+  --dark-accent-bright: #FF91CF;
+}
+
+.theme-sunny {
+  --color-surface: #D4EEFF;
+  --color-ink: #1B3A2A;
+  --color-accent: #E8860C;
+  --color-warm: #F5C842;
+  --color-edge: #A8D4F0;
+  --color-emphasis: #0F2A1A;
+}
+
+.theme-aura {
+  --color-surface: #F8F4FF;
+  --color-ink: #2D2640;
+  --color-accent: #9B8EC4;
+  --color-warm: #D4A0C0;
+  --color-edge: #E8E0F0;
+  --color-emphasis: #1C1528;
+}
+
 @layer base {
   body {
     font-family: 'DM Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.5s ease, color 0.5s ease;
-  }
-
-  /* ─── Cosmic Theme: bright girly space ─── */
-  .theme-cosmic {
-    --color-surface: #1A0A2E;
-    --color-ink: #F5E6FF;
-    --color-accent: #FF69B4;
-    --color-warm: #C77DFF;
-    --color-edge: #3D1A6E;
-    --color-emphasis: #FFB6E1;
-    /* Dark theme tokens (consumed by .theme-dark shared overrides) */
-    --dark-card-bg: rgba(15, 5, 35, 0.85);
-    --dark-card-hover: rgba(20, 10, 45, 0.9);
-    --dark-accent-bright: #FF91CF;
-  }
-
-  /* ─── Sunny Theme: warm sky day ─── */
-  .theme-sunny {
-    --color-surface: #D4EEFF;
-    --color-ink: #1B3A2A;
-    --color-accent: #E8860C;
-    --color-warm: #F5C842;
-    --color-edge: #A8D4F0;
-    --color-emphasis: #0F2A1A;
-  }
-
-  /* ─── Aura Theme: override Tailwind color variables ─── */
-  .theme-aura {
-    --color-surface: #F8F4FF;
-    --color-ink: #2D2640;
-    --color-accent: #9B8EC4;
-    --color-warm: #D4A0C0;
-    --color-edge: #E8E0F0;
-    --color-emphasis: #1C1528;
   }
 }
 
