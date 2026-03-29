@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 
 export type Theme = "minimalist" | "aura";
 
-const THEME_LABELS: Record<Theme, string> = {
-  minimalist: "Minimalist",
-  aura: "Aura",
-};
+const THEMES: { id: Theme; label: string; icon: string }[] = [
+  { id: "minimalist", label: "Minimal", icon: "○" },
+  { id: "aura", label: "Aura", icon: "✦" },
+];
 
 interface ThemeSelectorProps {
   className?: string;
@@ -19,7 +19,8 @@ export function getStoredTheme(): Theme {
 }
 
 export function applyTheme(theme: Theme) {
-  document.documentElement.classList.remove("theme-minimalist", "theme-aura");
+  const allClasses = THEMES.map((t) => `theme-${t.id}`);
+  document.documentElement.classList.remove(...allClasses);
   document.documentElement.classList.add(`theme-${theme}`);
   localStorage.setItem("stillpoint-theme", theme);
   window.dispatchEvent(new CustomEvent("theme-change", { detail: theme }));
@@ -36,25 +37,28 @@ export default function ThemeSelector({ className = "" }: ThemeSelectorProps) {
     applyTheme(stored);
   }, []);
 
-  function toggle() {
-    const next: Theme = theme === "minimalist" ? "aura" : "minimalist";
-    setTheme(next);
-    applyTheme(next);
+  function select(t: Theme) {
+    setTheme(t);
+    applyTheme(t);
   }
 
   if (!mounted) return null;
 
   return (
-    <button
-      onClick={toggle}
-      className={`rounded-full border px-3 py-1 text-xs transition-all ${
-        theme === "aura"
-          ? "border-purple-300/30 bg-purple-200/20 text-purple-400"
-          : "border-mist text-charcoal/30 hover:text-charcoal/60"
-      } ${className}`}
-      title={`Switch to ${THEME_LABELS[theme === "minimalist" ? "aura" : "minimalist"]}`}
-    >
-      {theme === "minimalist" ? "✦ Aura" : "○ Minimal"}
-    </button>
+    <div className={`inline-flex rounded-full border border-mist bg-white/50 p-0.5 ${className}`}>
+      {THEMES.map((t) => (
+        <button
+          key={t.id}
+          onClick={() => select(t.id)}
+          className={`rounded-full px-3 py-1 text-xs transition-all ${
+            theme === t.id
+              ? "bg-charcoal text-cream shadow-sm"
+              : "text-charcoal/40 hover:text-charcoal/70"
+          }`}
+        >
+          {t.icon} {t.label}
+        </button>
+      ))}
+    </div>
   );
 }
