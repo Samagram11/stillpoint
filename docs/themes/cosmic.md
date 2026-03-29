@@ -17,9 +17,9 @@ Bright, girly space aesthetic with vibrant purple stars, hot pink planets, and d
 
 Animated space scene with three layers:
 
-- **Stars (12):** Tiny circles in pink, purple, and gold scattered across the viewport with twinkling animation (scale + opacity pulse, 2s cycle, staggered delays)
+- **Stars (24):** 12 pink/purple/gold circles + 12 small pale yellow (#FFFACD, #FFF8DC) circles scattered across the viewport with twinkling animation (scale + opacity pulse, 2s cycle, staggered delays)
 - **Planets (3):** Radial gradient spheres with inner shadow for 3D look and soft glow. Hot pink (#FF1493), violet (#9B30FF), and pink (#FF69B4). Gentle floating animation (25s cycle)
-- **Rockets (2):** Emoji rocket ships (🚀) that drift across the screen diagonally over 30s, looping continuously at staggered intervals
+- **Rockets (2):** Emoji rocket ships (🚀) that drift upward across the screen over 30s, looping continuously at staggered intervals
 
 Subtle radial gradient overlays add depth to the dark background.
 

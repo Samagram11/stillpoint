@@ -46,7 +46,7 @@ export default function ThemeSelector({ className = "" }: ThemeSelectorProps) {
   if (!mounted) return null;
 
   return (
-    <div className={`inline-flex rounded-full border border-edge bg-white/50 p-0.5 ${className}`}>
+    <div className={`cosmic-toggle inline-flex rounded-full border border-edge bg-white/50 p-0.5 ${className}`}>
       {THEMES.map((t) => (
         <button
           key={t.id}
