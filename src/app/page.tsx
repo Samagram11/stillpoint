@@ -302,11 +302,11 @@ export default function Home() {
 
       {/* Header — always visible except in player */}
       {step !== "reader" && (
-        <div className="mb-12 text-center fade-in">
+        <div className="mb-8 sm:mb-12 text-center fade-in">
           <div className="flex justify-end mb-4">
             <ThemeSelector />
           </div>
-          <h1 className="font-display text-5xl font-light tracking-tight text-ink">
+          <h1 className="font-display text-4xl sm:text-5xl font-light tracking-tight text-ink">
             stillpoint
           </h1>
           <p className="mt-3 text-sm text-ink/50">

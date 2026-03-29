@@ -76,7 +76,7 @@ export default function UploadZone({ onFileLoaded }: UploadZoneProps) {
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
         }}
-        className={`cursor-pointer rounded-xl border-2 border-dashed p-12 text-center transition-all ${
+        className={`cursor-pointer rounded-xl border-2 border-dashed p-6 sm:p-12 text-center transition-all active:scale-[0.98] ${
           isDragging
             ? "border-accent bg-accent/5"
             : "border-edge hover:border-accent/50"
@@ -111,10 +111,11 @@ export default function UploadZone({ onFileLoaded }: UploadZoneProps) {
         ) : (
           <>
             <p className="text-sm font-medium text-ink/60">
-              Drop your Claude export here
+              <span className="hidden sm:inline">Drop your Claude export here or click to browse</span>
+              <span className="sm:hidden">Tap to select your Claude export</span>
             </p>
             <p className="mt-1 text-xs text-ink/30">
-              JSON file from claude.ai → Settings → Export Data
+              JSON file from claude.ai &rarr; Settings &rarr; Export Data
             </p>
           </>
         )}
