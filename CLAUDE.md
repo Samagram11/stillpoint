@@ -120,35 +120,23 @@ stillpoint/
 
 ## Design System
 
-### Aesthetic: Warm Minimalism
-Kinfolk magazine meets high-end therapy office. NOT purple gradients, lotus flowers, or stock mountain photos.
+Users choose between themes via a pill selector. Theme CSS variables are defined in `src/styles/globals.css`. Each theme's full spec lives in its own file:
 
-### Colors
-```css
---cream:     #F5F0EB;
---charcoal:  #2C2C2C;
---sage:      #8B9D83;
---clay:      #C4A882;
---mist:      #D4D0CB;
---deep:      #1A1A1A;
-```
+- **[Minimalist](docs/themes/minimalist.md)** — Warm minimalism, cream/sage/charcoal. Default.
+- **[Aura](docs/themes/aura.md)** — Iridescent gradients, frosted glass, lavender/pink/mint.
 
-### Typography
-- **Display/Titles:** Cormorant Garamond (Google Fonts)
-- **Body/UI:** DM Sans (Google Fonts)
-
-### Principles
+### Shared Principles
 - Generous whitespace — the app should feel like exhaling
 - Subtle fade-in animations, no aggressive motion
 - No clutter, badges, gamification, or streaks
-- Dark mode for evening meditations (auto-detect + toggle)
 - Mobile-first
+- Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`
 
 ### Key UI States
 1. **Setup:** API key entry + upload zone. Clean, non-intimidating.
-2. **Processing:** Breathing circle. "Reading your story..." → "Understanding what you need..." → "Writing your meditations..."
+2. **Processing:** Breathing circle with progressive messages.
 3. **Gallery:** 5-6 cards with poetic titles. Voice selector at top.
-4. **Player:** Full-screen. Large serif text with word highlighting during audio. Breathing guide. Timer. Bell.
+4. **Player:** Full-screen. Large serif text. Breathing guide. Timer. Bell.
 
 ---
 
@@ -206,7 +194,7 @@ ELEVENLABS_API_KEY=              # Optional — text-only mode works without thi
 - No `any` type
 - No raw conversation data stored after parsing
 - No conversation content sent beyond /api/extract-themes
-- No purple gradients, lotus flowers, stock meditation imagery
+- No lotus flowers or stock meditation imagery
 - No Inter, Roboto, or Arial
 - No analytics, tracking, or telemetry
 - No user accounts or auth in v1
@@ -237,15 +225,15 @@ ELEVENLABS_API_KEY=              # Optional — text-only mode works without thi
 ### Phase 4: Audio
 - [x] VoiceSelector (6 voices + custom)
 - [x] /api/generate-audio route
-- [x] AudioPlayer component
+- [x] AudioPlayer component (ElevenLabs + Web Speech API fallback)
 - [x] SSML conversion
-- [ ] Text-audio sync (deferred to Phase 5 — needs MeditationPlayer)
+- [ ] Text-audio sync (word highlighting during playback)
 
 ### Phase 5: Player Polish
-- [ ] Full-screen MeditationPlayer
-- [ ] BreathGuide (4-7-8)
-- [ ] Timer + bell
-- [ ] Dark mode
+- [x] Full-screen MeditationPlayer
+- [x] BreathGuide (4-4-4-4 box breathing)
+- [x] Timer + bell
+- [x] Theme system (Minimalist + Aura, replaces dark mode)
 - [ ] Mobile optimization
 
 ### Phase 6: Ship
