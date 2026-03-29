@@ -20,7 +20,7 @@ Stillpoint does NOT recite your problems back to you. It identifies what capacit
 ## Data Flow
 
 ```
-Upload JSON → parseExport.ts (client, strips to human msgs only)
+Upload JSON/ZIP/folder → parseExport.ts (client, strips to human msgs only)
   → /api/extract-themes (server, Claude API, returns capacities with approaches)
   → selectCapacities (client, top 5 by intensity)
   → /api/generate-meditation (server, Claude API, sequential)
@@ -80,7 +80,6 @@ Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`.
 - No Inter, Roboto, or Arial
 - No analytics, tracking, or telemetry
 - No user accounts or auth in v1
-- No word "journey" in meditations
 - No specific life details in meditation scripts
 - No .env.local committed to repo
 
@@ -107,14 +106,17 @@ Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`.
 - [x] /api/generate-audio route
 - [x] AudioPlayer component (ElevenLabs + Web Speech API fallback)
 - [x] SSML conversion
-- [ ] Text-audio sync (word highlighting during playback)
 
 ### Phase 5: Player Polish
 - [x] Full-screen MeditationPlayer
 - [x] BreathGuide (4-4-4-4 box breathing)
 - [x] Timer + bell
 - [x] Theme system (Minimalist + Aura, replaces dark mode)
-- [ ] Mobile optimization
+- [x] Semantic CSS tokens (surface/ink/accent/warm/edge/emphasis)
+- [x] ZIP + folder upload support, freshness tracking
+- [x] Mobile-optimized upload flow and layout
+- [x] Theme-designer skill for contributors
+- [ ] Mobile optimization (remaining polish)
 
 ### Phase 6: Ship
 - [ ] README.md, LICENSE, contributing guidelines
