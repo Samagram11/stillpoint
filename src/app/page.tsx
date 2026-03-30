@@ -51,6 +51,8 @@ export default function Home() {
     setTheme(getStoredTheme());
 
     async function init() {
+      const hasVisited = localStorage.getItem("stillpoint-has-visited");
+
       // Check if server has API keys configured (personal deploy)
       try {
         const configRes = await fetch("/api/config");
@@ -59,8 +61,10 @@ export default function Home() {
           if (config.hasAnthropicKey) {
             setServerHasKeys(true);
             if (config.hasElevenLabsKey) setHasElevenLabsKey(true);
-            // Server has keys — skip BYOK, use a placeholder config
-            setApiKeys({ anthropicKey: "server-provided" });
+            setApiKeys({
+              anthropicKey: "server-provided",
+              ...(config.hasElevenLabsKey && { elevenLabsKey: "server-provided" }),
+            });
 
             // Check for cached meditations
             const storedMeditations = localStorage.getItem(
@@ -76,7 +80,8 @@ export default function Home() {
               }
             }
 
-            setStep("upload");
+            // First visit — show landing page; returning visitors go to upload
+            setStep(hasVisited ? "upload" : "landing");
             return;
           }
         }
@@ -107,11 +112,14 @@ export default function Home() {
             }
 
             setStep("upload");
+            return;
           }
         } catch {
           // Corrupted — start fresh
         }
       }
+
+      // No keys at all — show landing (default state is already "landing")
     }
 
     init();
@@ -268,6 +276,7 @@ export default function Home() {
 
   function handleKeysComplete(config: ApiKeyConfig) {
     setApiKeys(config);
+    if (config.elevenLabsKey) setHasElevenLabsKey(true);
     setStep("upload");
   }
 
@@ -285,6 +294,7 @@ export default function Home() {
     localStorage.removeItem("stillpoint-meditations");
     localStorage.removeItem("stillpoint-extraction");
     localStorage.removeItem("stillpoint-import-date");
+    localStorage.removeItem("stillpoint-has-visited");
     setMeditations([]);
     setImportDate(null);
     setSelectedMeditation(null);
@@ -381,7 +391,10 @@ export default function Home() {
             </div>
 
             <button
-              onClick={() => setStep(serverHasKeys ? "upload" : "keys")}
+              onClick={() => {
+                localStorage.setItem("stillpoint-has-visited", "1");
+                setStep(serverHasKeys ? "upload" : "keys");
+              }}
               className="w-full rounded-lg bg-ink px-6 py-3 text-sm font-medium text-surface transition-all hover:bg-emphasis aura-btn"
             >
               Get Started

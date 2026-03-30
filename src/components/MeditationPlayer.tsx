@@ -145,6 +145,9 @@ export default function MeditationPlayer({
   );
   const totalSentences = sentences.length;
 
+  // Don't send sentinel values as real API keys — server routes use process.env
+  const realApiKey = elevenLabsKey && elevenLabsKey !== "server-provided" ? elevenLabsKey : undefined;
+
   const selectedVoice = voices.find((v) => v.id === selectedVoiceId);
   const isElevenLabs = selectedVoice?.type === "elevenlabs";
   const hasAudio = !!meditation.audioBase64;
@@ -176,7 +179,7 @@ export default function MeditationPlayer({
           const res = await fetch("/api/voices", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ apiKey: elevenLabsKey }),
+            body: JSON.stringify({ apiKey: realApiKey }),
           });
           if (res.ok && !cancelled) {
             const data = await res.json();
@@ -347,7 +350,7 @@ export default function MeditationPlayer({
         body: JSON.stringify({
           script: meditation.script,
           voiceId,
-          apiKey: elevenLabsKey,
+          apiKey: realApiKey,
         }),
       });
 
