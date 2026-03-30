@@ -58,10 +58,17 @@ export async function POST(request: NextRequest) {
       const errorBody = await response.text();
       const status = response.status;
 
-      if (status === 401 || status === 403) {
+      if (status === 401) {
+        // Check if it's a quota issue (ElevenLabs returns 401 for this)
+        if (errorBody.includes("quota_exceeded")) {
+          return NextResponse.json(
+            { error: "ElevenLabs credit limit reached. Try a browser voice instead, or upgrade your ElevenLabs plan." },
+            { status: 429 }
+          );
+        }
         return NextResponse.json(
-          { error: `ElevenLabs rejected the request (${status}): ${errorBody}` },
-          { status }
+          { error: "Invalid ElevenLabs API key. Please check your key and try again." },
+          { status: 401 }
         );
       }
 
