@@ -121,4 +121,4 @@ Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`.
 ### Phase 6: Ship
 - [x] README.md, LICENSE, contributing guidelines
 - [x] GitHub repo + good-first-issue labels
-- [ ] Deploy to Vercel
+- [x] Deploy to Vercel
