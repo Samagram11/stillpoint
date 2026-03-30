@@ -43,12 +43,8 @@ export default function MeditationCard({
         {meditation.capacity}
       </p>
 
-      <div className="mt-4 flex items-center gap-3 text-xs text-ink/30">
-        <span>{meditation.duration} min</span>
-        <span>·</span>
-        <span className="transition-colors group-hover:text-accent">
-          Read meditation →
-        </span>
+      <div className="mt-4 text-xs text-ink/30">
+        {meditation.duration} min
       </div>
     </button>
   );
