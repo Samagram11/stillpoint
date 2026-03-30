@@ -119,6 +119,6 @@ Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`.
 - [ ] Mobile optimization (remaining polish)
 
 ### Phase 6: Ship
-- [ ] README.md, LICENSE, contributing guidelines
-- [ ] GitHub repo + good-first-issue labels
+- [x] README.md, LICENSE, contributing guidelines
+- [x] GitHub repo + good-first-issue labels
 - [ ] Deploy to Vercel
