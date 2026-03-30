@@ -58,10 +58,10 @@ export async function POST(request: NextRequest) {
       const errorBody = await response.text();
       const status = response.status;
 
-      if (status === 401) {
+      if (status === 401 || status === 403) {
         return NextResponse.json(
-          { error: "Invalid ElevenLabs API key." },
-          { status: 401 }
+          { error: `ElevenLabs rejected the request (${status}): ${errorBody}` },
+          { status }
         );
       }
 
