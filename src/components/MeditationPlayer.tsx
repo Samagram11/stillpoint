@@ -148,6 +148,25 @@ export default function MeditationPlayer({
   // Don't send sentinel values as real API keys — server routes use process.env
   const realApiKey = elevenLabsKey && elevenLabsKey !== "server-provided" ? elevenLabsKey : undefined;
 
+  // Switch to browser voices (e.g. after ElevenLabs quota exceeded)
+  const switchToBrowserVoices = useCallback(() => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    const available = speechSynthesis.getVoices().filter((v) =>
+      ALLOWED_BROWSER_VOICES.some((name) => v.name.includes(name))
+    );
+    const mapped: UnifiedVoice[] = available.map((v) => ({
+      id: `webspeech:${v.name}`,
+      name: v.name.replace(/\(.*\)/, "").trim(),
+      type: "webspeech" as const,
+      nativeVoice: v,
+    }));
+    if (mapped.length > 0) {
+      setVoices(mapped);
+      setSelectedVoiceId(mapped[0].id);
+      setAudioError(null);
+    }
+  }, []);
+
   const selectedVoice = voices.find((v) => v.id === selectedVoiceId);
   const isElevenLabs = selectedVoice?.type === "elevenlabs";
   const hasAudio = !!meditation.audioBase64;
@@ -714,7 +733,15 @@ export default function MeditationPlayer({
                         : "Press play to read"}
               </p>
               {audioError && (
-                <p className="mt-1 text-xs text-red-500/70">{audioError}</p>
+                <div className="mt-1 flex items-center gap-2">
+                  <p className="text-xs text-red-500/70">{audioError}</p>
+                  <button
+                    onClick={switchToBrowserVoices}
+                    className="shrink-0 rounded-full border border-edge px-2.5 py-1 text-xs text-ink/50 transition-colors hover:border-accent hover:text-ink/70"
+                  >
+                    Use browser voices
+                  </button>
+                </div>
               )}
             </div>
           )}
