@@ -14,8 +14,8 @@ npm run build   # verify before committing
 
 Stillpoint does NOT recite your problems back to you. It identifies what capacities you need — then builds meditations that develop those capacities using universal language. Two-layer model:
 
-1. **Capacity Extraction** — Read conversations, identify what the person needs to *practice*. LLM produces textured capacity names + meditation seeds + recommended approaches. Prompt in `.claude/skills/theme-extractor/SKILL.md`.
-2. **Meditation Generation** — Build those capacities using universal language. NEVER mention specific life details. 5 structural approaches (grounding, somatic, visualization, compassion, spacious) defined in `src/lib/meditationTypes.ts`. Prompt in `.claude/skills/meditation-writer/SKILL.md`.
+1. **Capacity Extraction** — Read conversations, identify what the person needs to *practice*. LLM produces textured capacity names + meditation seeds + recommended approaches. Prompt in `src/app/api/extract-themes/route.ts`.
+2. **Meditation Generation** — Build those capacities using universal language. NEVER mention specific life details. 5 structural approaches (grounding, somatic, visualization, compassion, spacious) defined in `src/lib/meditationTypes.ts`. Prompt in `src/app/api/generate-meditation/route.ts`.
 
 ## Data Flow
 

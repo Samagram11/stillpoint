@@ -1,7 +1,7 @@
 /**
  * Client-side Claude conversation export parser.
  *
- * Implements the theme-extractor skill's input preparation rules:
+ * Input preparation rules for the extract-themes route:
  * - Human messages only (strip assistant responses)
  * - Strip technical content (code blocks, tool calls, JSON, file paths)
  * - Recency weighting (last 30d full, 30-90d sampled, 90d+ excluded)
