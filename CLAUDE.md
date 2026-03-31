@@ -92,12 +92,12 @@ Typography: Cormorant Garamond (display) + DM Sans (body) via `next/font`.
 
 ### Phase 2: Data Pipeline
 - [x] parseExport.ts — client-side Claude JSON parser
-- [x] /api/extract-themes route (uses theme-extractor skill prompt)
+- [x] /api/extract-themes route
 - [x] ProcessingView with animated states
 
 ### Phase 3: Meditation Generation
 - [x] meditationTypes.ts — 5 structural approaches (grounding, somatic, visualization, compassion, spacious)
-- [x] /api/generate-meditation route (uses meditation-writer skill prompt)
+- [x] /api/generate-meditation route
 - [x] MeditationCard gallery
 - [x] localStorage caching
 
